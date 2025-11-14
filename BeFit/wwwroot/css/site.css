@@ -400,3 +400,100 @@ section {
 .text-white-50 {
     color: rgba(255, 255, 255, 0.5) !important;
 }
+
+.bg-purple-lighter {
+    background-color: var(--purple-lighter) !important;
+}
+
+/* About Page Styles */
+.about-hero-section {
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-dark) 100%);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+.about-image-card {
+    background: linear-gradient(135deg, var(--purple-lighter) 0%, #ffffff 100%);
+    border: 2px solid var(--purple-lighter);
+    transition: transform 0.3s ease;
+}
+
+.about-image-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.mission-card,
+.vision-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.mission-card:hover,
+.vision-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.value-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(111, 66, 193, 0.15) !important;
+}
+
+.value-icon {
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover .value-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.why-choose-item {
+    transition: all 0.3s ease;
+}
+
+.why-choose-item:hover {
+    transform: translateX(5px);
+}
+
+.icon-wrapper {
+    transition: all 0.3s ease;
+}
+
+.why-choose-item:hover .icon-wrapper {
+    transform: scale(1.1);
+    background-color: var(--purple-primary) !important;
+}
+
+.why-choose-item:hover .icon-wrapper i {
+    color: white !important;
+}
+
+/* Responsive adjustments for About page */
+@media (max-width: 768px) {
+    .about-hero-section {
+        min-height: auto;
+        padding: 3rem 0;
+    }
+
+    .min-vh-50 {
+        min-height: auto;
+    }
+
+    .display-3 {
+        font-size: 2rem;
+    }
+
+    .display-5 {
+        font-size: 1.75rem;
+    }
+}

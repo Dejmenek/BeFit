@@ -1,8 +1,331 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section py-5">
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <div class="hero-content fade-in">
+                    <h1 class="display-3 fw-bold mb-4 text-dark">
+                        Transform Your Body,<br />
+                        <span class="text-purple">Transform Your Life</span>
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        Track your workouts, monitor your progress, and achieve your fitness goals with BeFit. 
+                        The all-in-one platform designed for serious fitness enthusiasts.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-purple btn-lg px-4 py-3">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                        </a>
+                        <a asp-controller="Home" asp-action="About" class="btn btn-outline-purple btn-lg px-4 py-3">
+                            <i class="bi bi-info-circle me-2"></i>Learn More
+                        </a>
+                    </div>
+                    <div class="mt-4 d-flex gap-4 text-muted">
+                        <div>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>Free Forever
+                        </div>
+                        <div>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>No Credit Card
+                        </div>
+                        <div>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>Easy Setup
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-image slide-in-right">
+                    <div class="hero-card p-4 rounded-4 shadow-lg bg-white">
+                        <i class="bi bi-activity display-1 text-purple mb-3"></i>
+                        <h3 class="fw-bold mb-2">Your Fitness Journey Starts Here</h3>
+                        <p class="text-muted">Join thousands of users achieving their goals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3 text-dark">Everything You Need to Succeed</h2>
+            <p class="lead text-muted">Powerful features to help you reach your fitness goals</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-graph-up-arrow fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Track Progress</h5>
+                        <p class="card-text text-muted">
+                            Log your daily workout sessions and monitor your progress with detailed analytics and visual charts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-heart-pulse fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Stay Motivated</h5>
+                        <p class="card-text text-muted">
+                            Set personal goals, celebrate milestones, and stay motivated with achievement badges and progress tracking.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-clipboard-data fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Workout Templates</h5>
+                        <p class="card-text text-muted">
+                            Create and save custom workout templates to streamline your training sessions and maintain consistency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-calendar-check fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Exercise Library</h5>
+                        <p class="card-text text-muted">
+                            Access a comprehensive library of exercises with detailed instructions and tracking capabilities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-speedometer2 fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Performance Insights</h5>
+                        <p class="card-text text-muted">
+                            Get detailed insights into your performance trends and identify areas for improvement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-people fs-1 text-purple"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">Join Community</h5>
+                        <p class="card-text text-muted">
+                            Connect with other fitness enthusiasts, share your progress, and get inspired by others' journeys.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3 text-dark">How It Works</h2>
+            <p class="lead text-muted">Get started in three simple steps</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card text-center fade-in-up">
+                    <div class="step-number mb-4">
+                        <span class="badge bg-purple rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem;">1</span>
+                    </div>
+                    <h4 class="fw-bold mb-3">Create Your Account</h4>
+                    <p class="text-muted">
+                        Sign up for free in seconds. No credit card required. Start tracking your fitness journey immediately.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card text-center fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="step-number mb-4">
+                        <span class="badge bg-purple rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem;">2</span>
+                    </div>
+                    <h4 class="fw-bold mb-3">Log Your Workouts</h4>
+                    <p class="text-muted">
+                        Record your exercises, sets, reps, and weights. Build your workout history and track your progress over time.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card text-center fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="step-number mb-4">
+                        <span class="badge bg-purple rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem;">3</span>
+                    </div>
+                    <h4 class="fw-bold mb-3">Achieve Your Goals</h4>
+                    <p class="text-muted">
+                        Monitor your progress, analyze your performance, and celebrate your achievements as you reach new milestones.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5 bg-purple text-white">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-item fade-in">
+                    <i class="bi bi-people-fill display-4 mb-3"></i>
+                    <h3 class="fw-bold mb-2">10K+</h3>
+                    <p class="mb-0 text-white-50">Active Users</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-item fade-in" style="animation-delay: 0.1s;">
+                    <i class="bi bi-clipboard-check-fill display-4 mb-3"></i>
+                    <h3 class="fw-bold mb-2">500K+</h3>
+                    <p class="mb-0 text-white-50">Workouts Logged</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-item fade-in" style="animation-delay: 0.2s;">
+                    <i class="bi bi-trophy-fill display-4 mb-3"></i>
+                    <h3 class="fw-bold mb-2">50K+</h3>
+                    <p class="mb-0 text-white-50">Goals Achieved</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-item fade-in" style="animation-delay: 0.3s;">
+                    <i class="bi bi-star-fill display-4 mb-3"></i>
+                    <h3 class="fw-bold mb-2">4.8/5</h3>
+                    <p class="mb-0 text-white-50">User Rating</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3 text-dark">What Our Users Say</h2>
+            <p class="lead text-muted">Real stories from real people</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            "BeFit has completely transformed how I track my workouts. The interface is clean, and I love seeing my progress over time."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-purple text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="d-block">Sarah Johnson</strong>
+                                <small class="text-muted">Fitness Enthusiast</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            "The workout templates feature is a game-changer. I can quickly start my sessions and focus on what matters - training hard."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-purple text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="d-block">Mike Chen</strong>
+                                <small class="text-muted">Personal Trainer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            "Best fitness tracking app I've used. Simple, powerful, and it keeps me motivated to hit the gym every day."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-purple text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="d-block">Emily Rodriguez</strong>
+                                <small class="text-muted">Yoga Instructor</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-card bg-purple text-white p-5 rounded-4 shadow-lg fade-in">
+                    <h2 class="display-5 fw-bold mb-3">Ready to Start Your Fitness Journey?</h2>
+                    <p class="lead mb-4 opacity-75">
+                        Join thousands of users who are already tracking their workouts and achieving their fitness goals with BeFit.
+                    </p>
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-light btn-lg px-5 py-3">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Create Your Free Account
+                    </a>
+                    <p class="mt-3 mb-0 small opacity-75">
+                        <i class="bi bi-shield-check me-2"></i>No credit card required • Free forever • Easy setup
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,86 @@
+using BeFit.DTOs;
+using BeFit.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BeFit.Areas.Dashboard.Controllers;
+
+[Area("Dashboard")]
+[Authorize]
+public class WorkoutSessionsController : BaseController
+{
+    private readonly IWorkoutSessionService _workoutSessionService;
+
+    public WorkoutSessionsController(IWorkoutSessionService workoutSessionService)
+    {
+        _workoutSessionService = workoutSessionService;
+    }
+
+    public async Task<IActionResult> Index(int pageNumber = 1)
+    {
+        var userId = GetUserId();
+        var result = await _workoutSessionService.GetUserWorkoutSessionsAsync(userId!, pageNumber, 5);
+        if (!result.IsSuccess)
+            return View("Error", result.Error);
+
+        return View(result.Value);
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(WorkoutSessionRequest request)
+    {
+        if (!ModelState.IsValid)
+            return View(request);
+
+        var userId = GetUserId();
+
+        var result = await _workoutSessionService.CreateWorkoutSessionAsync(userId!, request);
+        if (!result.IsSuccess)
+            return View("Error", result.Error);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var result = await _workoutSessionService.GetWorkoutSessionByIdAsync(id);
+        if (!result.IsSuccess)
+            return View("Error", result.Error);
+
+        return View(result.Value);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, WorkoutSessionRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            var response = new WorkoutSessionResponse(id, request.StartDate, request.EndDate, request.Notes);
+            return View(response);
+        }
+
+        var result = await _workoutSessionService.UpdateWorkoutSessionAsync(id, request);
+        if (!result.IsSuccess)
+            return View("Error", result.Error);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var result = await _workoutSessionService.DeleteWorkoutSessionAsync(id);
+        if (!result.IsSuccess)
+            return View("Error", result.Error);
+
+        return RedirectToAction(nameof(Index));
+    }
+}

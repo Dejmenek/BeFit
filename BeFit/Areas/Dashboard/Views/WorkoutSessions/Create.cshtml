@@ -1,0 +1,40 @@
+@using BeFit.DTOs
+@model WorkoutSessionRequest
+@{
+    ViewData["Title"] = "Create Workout Session";
+}
+
+<div class="container py-4">
+    <div class="d-flex align-items-center mb-4">
+        <i class="bi bi-calendar-check text-purple me-2" style="font-size: 1.5rem;"></i>
+        <h2 class="mb-0">Create Workout Session</h2>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <form asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label asp-for="StartDate" class="form-label">Start Date & Time</label>
+                    <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EndDate" class="form-label">End Date & Time</label>
+                    <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-purple">Create</button>
+                <a asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

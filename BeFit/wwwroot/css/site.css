@@ -933,3 +933,46 @@ section {
         min-height: calc(100vh - 150px);
     }
 }
+
+/* Pagination Styles - Purple Theme */
+.pagination {
+    margin-bottom: 0;
+}
+
+.pagination .page-link {
+    color: var(--purple-primary);
+    border-color: #e9ecef;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0.75rem;
+}
+
+.pagination .page-link:hover {
+    color: white;
+    background-color: var(--purple-primary);
+    border-color: var(--purple-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(111, 66, 193, 0.3);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--purple-primary);
+    border-color: var(--purple-primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(111, 66, 193, 0.3);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #fff;
+    border-color: #e9ecef;
+    color: #6c757d;
+}

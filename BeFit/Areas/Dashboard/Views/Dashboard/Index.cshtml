@@ -1,0 +1,142 @@
+@model BeFit.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard Home";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Dashboard Overview</h2>
+
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 shadow-sm border-0 hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-activity text-purple" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title text-muted mb-3">Total Workouts</h5>
+                    <p class="display-6 mb-0 text-purple fw-bold">@Model.WorkoutStats.TotalWorkouts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 shadow-sm border-0 hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-fire text-danger" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title text-muted mb-3">Current Streak</h5>
+                    <p class="display-6 mb-0 text-danger-emphasis fw-bold">@Model.WorkoutStats.Streak</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 shadow-sm border-0 hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-clock-history text-info" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title text-muted mb-3">Total Time Spent</h5>
+                    <p class="display-6 mb-0 text-info fw-bold">
+                        @{
+                            var ts = Model.WorkoutStats.TotalTimeSpent;
+                            var formatted = $"{(int)ts.TotalHours}h {ts.Minutes}m";
+                        }
+                        @formatted
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-calendar3 text-purple me-2" style="font-size: 1.5rem;"></i>
+            <h4 class="mb-0">Training Calendar</h4>
+        </div>
+        @if (Model.TrainingCalendar != null && Model.TrainingCalendar.Any())
+        {
+            <div class="row g-3">
+                @{
+                    var cardColors = new[] { "#e9d5ff", "#f3d9f5", "#ffe0f0" };
+                    var colorIndex = 0;
+                }
+                @foreach (var item in Model.TrainingCalendar)
+                {
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card shadow-sm h-100" style="background-color: @cardColors[colorIndex % cardColors.Length]; border-radius: 12px; border-left: 5px solid var(--purple-primary)">
+                            <div class="card-body p-3">
+                                <h6 class="text-purple fw-bold mb-2">@item.DayOfWeek</h6>
+                                <p class="text-muted small mb-2">
+                                    <strong>Group:</strong> @item.TemplateName
+                                </p>
+                                <p class="text-muted small mb-0">
+                                    <strong>Exercises:</strong> @string.Join(", ", item.ExerciseNames)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    colorIndex++;
+                }
+            </div>
+        }
+        else
+        {
+            <div class="card border-0 shadow-sm bg-light">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-calendar-x text-muted mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted mb-2">No Training Calendar</h5>
+                    <p class="text-muted mb-0">You haven't set up your training calendar yet. Create workout templates to get started!</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-bar-chart text-purple me-2" style="font-size: 1.5rem;"></i>
+            <h4 class="mb-0">Exercise Statistics</h4>
+        </div>
+        @if (Model.ExerciseStats != null && Model.ExerciseStats.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover shadow-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Target Muscle</th>
+                            <th>Sessions Trained</th>
+                            <th>Total Reps</th>
+                            <th>Avg. Weight</th>
+                            <th>Max Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ex in Model.ExerciseStats)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@ex.Name</td>
+                                <td>@ex.Category</td>
+                                <td>@ex.TargetMuscle</td>
+                                <td>@ex.SessionsTrained</td>
+                                <td>@ex.TotalReps</td>
+                                <td>@ex.AverageWeight</td>
+                                <td class="fw-semibold text-purple">@ex.MaxWeight</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="card border-0 shadow-sm bg-light">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-graph-down text-muted mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted mb-2">No Exercise Statistics</h5>
+                    <p class="text-muted mb-0">Start logging your workout sessions to see exercise statistics here.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,120 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BeFit Dashboard</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BeFit.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-container">
+        <nav id="sidebar" class="sidebar bg-white border-end d-flex flex-column">
+            <div class="sidebar-icon d-flex">
+                <button id="sidebarCollapse" class="btn btn-sm" type="button" aria-label="Toggle sidebar">
+                    <i id="sidebarToggleIcon" class="bi bi-list fs-5"></i>
+                </button>
+            </div>
+            <ul class="list-unstyled px-2 flex-grow-1">
+                <li>
+                    <a class="sidebar-link @(currentController == "Dashboard" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="Dashboard"
+                       asp-action="Index">
+                        <i class="bi bi-speedometer2"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link"
+                       asp-area=""
+                       asp-controller="Home"
+                       asp-action="Index">
+                        <i class="bi bi-house-door"></i>
+                        <span class="sidebar-text">Home Page</span>
+                    </a>
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        <a class="sidebar-link @(currentController == "Exercises" ? "active" : "")"
+                           asp-area="Dashboard"
+                           asp-controller="Exercises"
+                           asp-action="Index">
+                            <i class="bi bi-box"></i>
+                            <span class="sidebar-text">Exercises</span>
+                        </a>
+                    </li>
+                }
+                <li>
+                    <a class="sidebar-link @(currentController == "WorkoutSessions" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="WorkoutSessions"
+                       asp-action="Index">
+                        <i class="bi bi-calendar-check"></i>
+                        <span class="sidebar-text">Workout Sessions</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link @(currentController == "WorkoutSessionDetails" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="WorkoutSessionDetails"
+                       asp-action="Index">
+                        <i class="bi bi-list-task"></i>
+                        <span class="sidebar-text">Workout Session Details</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link @(currentController == "WorkoutTemplates" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="WorkoutTemplates"
+                       asp-action="Index">
+                        <i class="bi bi-clipboard2-check"></i>
+                        <span class="sidebar-text">Workout Templates</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link @(currentController == "WorkoutTemplateExercises" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="WorkoutTemplateExercises"
+                       asp-action="Index">
+                        <i class="bi bi-diagram-3"></i>
+                        <span class="sidebar-text">Workout Template Exercises</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-logout px-2 pb-3">
+                <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="m-0">
+                    <button type="submit" class="sidebar-link w-100 btn p-0 text-start border-0">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span class="sidebar-text">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="main-content-wrapper" id="main-content">
+            <main role="main" class="main-content-area">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

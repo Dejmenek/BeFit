@@ -60,6 +60,26 @@ public class ExerciseService : IExerciseService
         return Result.Success(paginatedList);
     }
 
+    public async Task<Result<List<ExerciseResponse>>> GetAllExercisesAsync()
+    {
+        var exercises = await _context.Exercises
+            .AsNoTracking()
+            .OrderBy(e => e.Name)
+            .Select(e => new ExerciseResponse
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Category = e.Category,
+                TargetMuscle = e.TargetMuscle,
+                Difficulty = e.Difficulty,
+                Instructions = e.Instructions,
+                Equipment = e.Equipment
+            })
+            .ToListAsync();
+
+        return Result.Success(exercises);
+    }
+
     public async Task<Result> RemoveSingleExerciseAsync(int exerciseId)
     {
         var exercise = await _context.Exercises.FindAsync(exerciseId);

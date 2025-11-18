@@ -1,0 +1,100 @@
+@using BeFit.DTOs
+@using BeFit.Models.Enums
+@model ExerciseRequest
+
+@{
+    ViewData["Title"] = "Update Exercise";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="card p-0 border-0 shadow-sm">
+            <div class="card-header bg-purple text-white">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-pencil-square me-2" style="font-size: 1.5rem;"></i>
+                    <h4 class="mb-0">Update Exercise</h4>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-semibold">
+                            <i class="bi bi-tag text-purple me-1"></i>Exercise Name
+                        </label>
+                        <input asp-for="Name" class="form-control" maxlength="100" required placeholder="Enter exercise name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Category" class="form-label fw-semibold">
+                                <i class="bi bi-grid text-purple me-1"></i>Category
+                            </label>
+                            <select asp-for="Category" class="form-select" required>
+                                <option value="">-- Select Category --</option>
+                                @foreach (var value in Enum.GetValues(typeof(ExerciseType)))
+                                {
+                                    <option value="@value" selected="@(Model.Category == (ExerciseType)value ? "selected" : "")">@value</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TargetMuscle" class="form-label fw-semibold">
+                                <i class="bi bi-heart-pulse text-purple me-1"></i>Target Muscle
+                            </label>
+                            <select asp-for="TargetMuscle" class="form-select" required>
+                                <option value="">-- Select Target Muscle --</option>
+                                @foreach (var value in Enum.GetValues(typeof(MuscleType)))
+                                {
+                                    <option value="@value" selected="@(Model.TargetMuscle == (MuscleType)value ? "selected" : "")">@value</option>
+                                }
+                            </select>
+                            <span asp-validation-for="TargetMuscle" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Difficulty" class="form-label fw-semibold">
+                            <i class="bi bi-bar-chart text-purple me-1"></i>Difficulty Level
+                        </label>
+                        <select asp-for="Difficulty" class="form-select" required>
+                            <option value="">-- Select Difficulty --</option>
+                            @foreach (var value in Enum.GetValues(typeof(Difficulty)))
+                            {
+                                <option value="@value" selected="@(Model.Difficulty == (Difficulty)value ? "selected" : "")">@value</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Difficulty" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Instructions" class="form-label fw-semibold">
+                            <i class="bi bi-list-ol text-purple me-1"></i>Instructions
+                        </label>
+                        <textarea asp-for="Instructions" class="form-control" maxlength="500" rows="5" required placeholder="Enter step-by-step instructions for performing this exercise"></textarea>
+                        <div class="form-text">Maximum 500 characters</div>
+                        <span asp-validation-for="Instructions" class="text-danger"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Equipment" class="form-label fw-semibold">
+                            <i class="bi bi-tools text-purple me-1"></i>Equipment <span class="text-muted">(Optional)</span>
+                        </label>
+                        <input asp-for="Equipment" class="form-control" maxlength="200" placeholder="e.g., Dumbbells, Barbell, Resistance Bands" />
+                        <span asp-validation-for="Equipment" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-purple">
+                            <i class="bi bi-check-circle me-1"></i>Update Exercise
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -10,10 +10,12 @@ namespace BeFit.Areas.Dashboard.Controllers;
 public class WorkoutSessionsController : BaseController
 {
     private readonly IWorkoutSessionService _workoutSessionService;
+    private readonly IWorkoutSessionDetailsService _workoutSessionDetailsService;
 
-    public WorkoutSessionsController(IWorkoutSessionService workoutSessionService)
+    public WorkoutSessionsController(IWorkoutSessionService workoutSessionService, IWorkoutSessionDetailsService workoutSessionDetailsService)
     {
         _workoutSessionService = workoutSessionService;
+        _workoutSessionDetailsService = workoutSessionDetailsService;
     }
 
     public async Task<IActionResult> Index(int pageNumber = 1)
@@ -45,6 +47,25 @@ public class WorkoutSessionsController : BaseController
             return View("Error", result.Error);
 
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var sessionResult = await _workoutSessionService.GetWorkoutSessionByIdAsync(id);
+        if (!sessionResult.IsSuccess)
+            return View("Error", sessionResult.Error);
+
+        var detailsResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsAsync(id);
+        if (!detailsResult.IsSuccess)
+            return View("Error", detailsResult.Error);
+
+        var viewModel = new WorkoutSessionDetailsViewModel
+        {
+            Session = sessionResult.Value,
+            Details = detailsResult.Value
+        };
+
+        return View(viewModel);
     }
 
     public async Task<IActionResult> Edit(int id)

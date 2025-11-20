@@ -1,0 +1,209 @@
+@using BeFit.DTOs
+@model WorkoutTemplateDetailsViewModel
+@{
+    ViewData["Title"] = "Workout Template Details";
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-purple text-white">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clipboard-data me-2" style="font-size: 1.5rem;"></i>
+                            <h4 class="mb-0">Workout Template Information</h4>
+                        </div>
+                        <div>
+                            <a asp-area="Dashboard"
+                               asp-controller="WorkoutTemplates"
+                               asp-action="Edit"
+                               asp-route-id="@Model.Template.Id"
+                               class="btn btn-light btn-sm me-2">
+                                <i class="bi bi-pencil"></i> Edit Template
+                            </a>
+                            <a asp-area="Dashboard"
+                               asp-controller="WorkoutTemplates"
+                               asp-action="Index"
+                               class="btn btn-outline-light btn-sm">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-tag text-purple me-2" style="font-size: 1.2rem;"></i>
+                                <strong class="text-muted">Name</strong>
+                            </div>
+                            <p class="fs-5 mb-0">@Model.Template.Name</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar-week text-purple me-2" style="font-size: 1.2rem;"></i>
+                                <strong class="text-muted">Preferred Day</strong>
+                            </div>
+                            <p class="fs-5 mb-0">
+                                <span class="badge bg-purple">@Model.Template.PreferredDay</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-card-text text-purple me-2" style="font-size: 1.2rem;"></i>
+                                <strong class="text-muted">Description</strong>
+                            </div>
+                            <p class="fs-5 mb-0">
+                                @if (!string.IsNullOrWhiteSpace(Model.Template.Description))
+                                {
+                                    @Model.Template.Description
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No description</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-bullseye text-purple me-2" style="font-size: 1.2rem;"></i>
+                                <strong class="text-muted">Goals</strong>
+                            </div>
+                            <p class="fs-5 mb-0">
+                                @if (!string.IsNullOrWhiteSpace(Model.Template.Goals))
+                                {
+                                    @Model.Template.Goals
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No goals specified</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-activity text-purple me-2" style="font-size: 1.5rem;"></i>
+                    <h4 class="mb-0">Template Exercises</h4>
+                </div>
+            </div>
+
+            @if (Model.Exercises.Count == 0)
+            {
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body text-center py-5">
+                        <i class="bi bi-activity text-muted mb-3" style="font-size: 3rem;"></i>
+                        <h5 class="text-muted mb-2">No Exercises Found</h5>
+                        <p class="text-muted mb-0">This workout template doesn't have any exercises yet.</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover shadow-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 50px;">Order</th>
+                                <th>Exercise</th>
+                                <th>Sets</th>
+                                <th>Reps</th>
+                                <th>Weight (kg)</th>
+                                <th>Rest (sec)</th>
+                                <th>Tempo</th>
+                                <th>Distance (km)</th>
+                                <th>Duration (sec)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var exercise in Model.Exercises)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-purple">@exercise.Order</span>
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-activity text-purple me-1"></i>
+                                        <strong>@exercise.ExerciseName</strong>
+                                    </td>
+                                    <td>
+                                        @if (exercise.TargetSets.HasValue)
+                                        {
+                                            <span class="badge bg-purple">@exercise.TargetSets</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (exercise.TargetReps.HasValue)
+                                        {
+                                            @exercise.TargetReps
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (exercise.TargetWeight.HasValue)
+                                        {
+                                            @exercise.TargetWeight
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>@exercise.RestTimeInSeconds</td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(exercise.Tempo))
+                                        {
+                                            @exercise.Tempo
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (exercise.TargetDistance.HasValue)
+                                        {
+                                            @exercise.TargetDistance
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (exercise.TargetDurationInSeconds.HasValue)
+                                        {
+                                            @exercise.TargetDurationInSeconds
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

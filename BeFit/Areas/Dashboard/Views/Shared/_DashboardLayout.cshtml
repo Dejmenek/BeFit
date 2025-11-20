@@ -68,15 +68,6 @@
                     </a>
                 </li>
                 <li>
-                    <a class="sidebar-link @(currentController == "WorkoutSessionDetails" ? "active" : "")"
-                       asp-area="Dashboard"
-                       asp-controller="WorkoutSessionDetails"
-                       asp-action="Index">
-                        <i class="bi bi-list-task"></i>
-                        <span class="sidebar-text">Workout Session Details</span>
-                    </a>
-                </li>
-                <li>
                     <a class="sidebar-link @(currentController == "WorkoutTemplates" ? "active" : "")"
                        asp-area="Dashboard"
                        asp-controller="WorkoutTemplates"
@@ -111,6 +102,8 @@
             </main>
         </div>
     </div>
+
+    @await Html.PartialAsync("_Snackbar")
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

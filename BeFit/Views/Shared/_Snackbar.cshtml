@@ -1,0 +1,103 @@
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+</div>
+
+<script>
+    function showSnackbar(message, type = 'info') {
+        const toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) return;
+
+        const toastId = 'toast-' + Date.now();
+        const toast = document.createElement('div');
+        toast.id = toastId;
+        toast.className = 'toast';
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+        toast.setAttribute('data-bs-autohide', 'true');
+        toast.setAttribute('data-bs-delay', '5000');
+
+        let bgClass = 'bg-primary';
+        let icon = 'bi-info-circle';
+        let headerText = 'Information';
+
+        switch (type) {
+            case 'success':
+                bgClass = 'bg-success';
+                icon = 'bi-check-circle';
+                headerText = 'Success';
+                break;
+            case 'error':
+            case 'danger':
+                bgClass = 'bg-danger';
+                icon = 'bi-exclamation-circle';
+                headerText = 'Error';
+                break;
+            case 'warning':
+                bgClass = 'bg-warning';
+                icon = 'bi-exclamation-triangle';
+                headerText = 'Warning';
+                break;
+            case 'info':
+            default:
+                bgClass = 'bg-info';
+                icon = 'bi-info-circle';
+                headerText = 'Information';
+                break;
+        }
+
+        const toastHeader = document.createElement('div');
+        toastHeader.className = `toast-header ${bgClass} text-white`;
+        toastHeader.innerHTML = `
+            <i class="bi ${icon} me-2"></i>
+            <strong class="me-auto">${headerText}</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        `;
+
+        const toastBody = document.createElement('div');
+        toastBody.className = 'toast-body';
+        toastBody.textContent = message;
+
+        toast.appendChild(toastHeader);
+        toast.appendChild(toastBody);
+
+        toastContainer.appendChild(toast);
+
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+
+        toast.addEventListener('hidden.bs.toast', function () {
+            toast.remove();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        @if (TempData["Success"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Success"].ToString())), 'success');
+            </text>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Error"].ToString())), 'error');
+            </text>
+        }
+
+        @if (TempData["Warning"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Warning"].ToString())), 'warning');
+            </text>
+        }
+
+        @if (TempData["Info"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Info"].ToString())), 'info');
+            </text>
+        }
+    });
+</script>
+

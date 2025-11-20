@@ -1,0 +1,154 @@
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+</div>
+
+<style>
+    .custom-toast {
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        border: none;
+        overflow: hidden;
+        min-width: 300px;
+        max-width: 400px;
+        background-color: #ffffff;
+    }
+
+    .custom-toast .toast-header {
+        border-radius: 12px 12px 0 0;
+        border-bottom: none;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .custom-toast .toast-body {
+        padding: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--grey-dark, #343a40);
+        background-color: #ffffff;
+    }
+
+    .toast-header.bg-purple {
+        background-color: var(--purple-primary, #6f42c1) !important;
+    }
+
+    .toast-header.bg-success-custom {
+        background-color: #28a745 !important;
+    }
+
+    .toast-header.bg-danger-custom {
+        background-color: #dc3545 !important;
+    }
+
+    .toast-header.bg-warning-custom {
+        background-color: #ffc107 !important;
+        color: var(--grey-dark, #343a40) !important;
+    }
+
+    .toast-header.bg-warning-custom .btn-close {
+        filter: invert(1) grayscale(100%) brightness(0);
+    }
+</style>
+
+<script>
+    function showSnackbar(message, type = 'info') {
+        const toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) return;
+
+        const toastId = 'toast-' + Date.now();
+        const toast = document.createElement('div');
+        toast.id = toastId;
+        toast.className = 'toast custom-toast';
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+        toast.setAttribute('data-bs-autohide', 'true');
+        toast.setAttribute('data-bs-delay', '5000');
+
+        let bgClass = 'bg-purple';
+        let icon = 'bi-info-circle';
+        let headerText = 'Information';
+
+        switch (type) {
+            case 'success':
+                bgClass = 'bg-success-custom';
+                icon = 'bi-check-circle';
+                headerText = 'Success';
+                break;
+            case 'error':
+            case 'danger':
+                bgClass = 'bg-danger-custom';
+                icon = 'bi-exclamation-circle';
+                headerText = 'Error';
+                break;
+            case 'warning':
+                bgClass = 'bg-warning-custom';
+                icon = 'bi-exclamation-triangle';
+                headerText = 'Warning';
+                break;
+            case 'info':
+            default:
+                bgClass = 'bg-purple';
+                icon = 'bi-info-circle';
+                headerText = 'Information';
+                break;
+        }
+
+        const toastHeader = document.createElement('div');
+        const textColorClass = type === 'warning' ? '' : 'text-white';
+        const closeButtonClass = type === 'warning' ? 'btn-close' : 'btn-close btn-close-white';
+        toastHeader.className = `toast-header ${bgClass} ${textColorClass}`;
+        toastHeader.innerHTML = `
+            <i class="bi ${icon} me-2"></i>
+            <strong class="me-auto">${headerText}</strong>
+            <button type="button" class="${closeButtonClass}" data-bs-dismiss="toast" aria-label="Close"></button>
+        `;
+
+        const toastBody = document.createElement('div');
+        toastBody.className = 'toast-body';
+        toastBody.textContent = message;
+
+        toast.appendChild(toastHeader);
+        toast.appendChild(toastBody);
+
+        toastContainer.appendChild(toast);
+
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+
+        toast.addEventListener('hidden.bs.toast', function () {
+            toast.remove();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        @if (TempData["Success"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Success"].ToString())), 'success');
+            </text>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Error"].ToString())), 'error');
+            </text>
+        }
+
+        @if (TempData["Warning"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Warning"].ToString())), 'warning');
+            </text>
+        }
+
+        @if (TempData["Info"] != null)
+        {
+            <text>
+            showSnackbar(@Html.Raw(Json.Serialize(TempData["Info"].ToString())), 'info');
+            </text>
+        }
+    });
+</script>
+

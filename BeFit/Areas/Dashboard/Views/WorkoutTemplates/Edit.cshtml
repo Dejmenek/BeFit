@@ -1,0 +1,88 @@
+﻿@using BeFit.DTOs
+@model WorkoutTemplateRequest
+@{
+    ViewData["Title"] = "Edit Workout Template";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="card p-0 border-0 shadow-sm">
+            <div class="card-header bg-purple text-white">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-pencil me-2" style="font-size: 1.5rem;"></i>
+                    <h4 class="mb-0">Edit Workout Template</h4>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-area="Dashboard"
+                      asp-controller="WorkoutTemplates"
+                      asp-action="Edit"
+                      asp-route-id="@ViewBag.Id"
+                      method="post"
+                      class="needs-validation"
+                      novalidate>
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-semibold">
+                            <i class="bi bi-tag text-purple me-1"></i>Name <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <input asp-for="Name" type="text" class="form-control" required maxlength="100" placeholder="Enter template name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-semibold">
+                            <i class="bi bi-card-text text-purple me-1"></i>Description <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <textarea asp-for="Description" class="form-control" rows="3" maxlength="500" placeholder="Enter template description"></textarea>
+                        <div class="form-text">Maximum 500 characters</div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Goals" class="form-label fw-semibold">
+                            <i class="bi bi-bullseye text-purple me-1"></i>Goals <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <input asp-for="Goals" type="text" class="form-control" maxlength="200" placeholder="Enter workout goals" />
+                        <div class="form-text">Maximum 200 characters</div>
+                        <span asp-validation-for="Goals" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PreferredDay" class="form-label fw-semibold">
+                            <i class="bi bi-calendar-week text-purple me-1"></i>Preferred Day <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <select asp-for="PreferredDay" class="form-select" required>
+                            <option value="">-- Select Day --</option>
+                            <option value="@DayOfWeek.Monday" selected="@(Model.PreferredDay == DayOfWeek.Monday)">Monday</option>
+                            <option value="@DayOfWeek.Tuesday" selected="@(Model.PreferredDay == DayOfWeek.Tuesday)">Tuesday</option>
+                            <option value="@DayOfWeek.Wednesday" selected="@(Model.PreferredDay == DayOfWeek.Wednesday)">Wednesday</option>
+                            <option value="@DayOfWeek.Thursday" selected="@(Model.PreferredDay == DayOfWeek.Thursday)">Thursday</option>
+                            <option value="@DayOfWeek.Friday" selected="@(Model.PreferredDay == DayOfWeek.Friday)">Friday</option>
+                            <option value="@DayOfWeek.Saturday" selected="@(Model.PreferredDay == DayOfWeek.Saturday)">Saturday</option>
+                            <option value="@DayOfWeek.Sunday" selected="@(Model.PreferredDay == DayOfWeek.Sunday)">Sunday</option>
+                        </select>
+                        <span asp-validation-for="PreferredDay" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-purple">
+                            <i class="bi bi-check-circle me-1"></i>Update Template
+                        </button>
+                        <a asp-area="Dashboard"
+                           asp-controller="WorkoutTemplates"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

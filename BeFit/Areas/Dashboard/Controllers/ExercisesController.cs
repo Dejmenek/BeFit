@@ -7,7 +7,7 @@ namespace BeFit.Areas.Dashboard.Controllers;
 
 [Area("Dashboard")]
 [Authorize(Roles = "Admin")]
-public class ExercisesController : Controller
+public class ExercisesController : BaseController
 {
     private readonly IExerciseService _exerciseService;
 
@@ -39,8 +39,12 @@ public class ExercisesController : Controller
 
         var result = await _exerciseService.CreateExerciseAsync(request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Exercise created successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -76,8 +80,12 @@ public class ExercisesController : Controller
 
         var result = await _exerciseService.UpdateExerciseAsync(id, request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Exercise updated successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -87,8 +95,12 @@ public class ExercisesController : Controller
     {
         var result = await _exerciseService.RemoveSingleExerciseAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Exercise deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
 }

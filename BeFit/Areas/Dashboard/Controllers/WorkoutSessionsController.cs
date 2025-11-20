@@ -44,8 +44,12 @@ public class WorkoutSessionsController : BaseController
 
         var result = await _workoutSessionService.CreateWorkoutSessionAsync(userId!, request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Workout session created successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -89,8 +93,12 @@ public class WorkoutSessionsController : BaseController
 
         var result = await _workoutSessionService.UpdateWorkoutSessionAsync(id, request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Workout session updated successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -100,8 +108,12 @@ public class WorkoutSessionsController : BaseController
     {
         var result = await _workoutSessionService.DeleteWorkoutSessionAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Index));
+        }
 
+        TempData["Success"] = "Workout session deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
 }

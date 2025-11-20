@@ -7,7 +7,7 @@ namespace BeFit.Areas.Dashboard.Controllers;
 
 [Area("Dashboard")]
 [Authorize]
-public class WorkoutSessionDetailsController : Controller
+public class WorkoutSessionDetailsController : BaseController
 {
     private readonly IWorkoutSessionDetailsService _workoutSessionDetailsService;
     private readonly IExerciseService _exerciseService;
@@ -18,20 +18,14 @@ public class WorkoutSessionDetailsController : Controller
         _exerciseService = exerciseService;
     }
 
-    public async Task<IActionResult> Index(int workoutSessionId)
-    {
-        var result = await _workoutSessionDetailsService.GetWorkoutSessionDetailsAsync(workoutSessionId);
-        if (!result.IsSuccess)
-            return View("Error", result.Error);
-
-        return View(result.Value);
-    }
-
     public async Task<IActionResult> Create(int workoutSessionId)
     {
         var exercisesResult = await _exerciseService.GetAllExercisesAsync();
         if (!exercisesResult.IsSuccess)
-            return View("Error", exercisesResult.Error);
+        {
+            TempData["Error"] = exercisesResult.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
         var viewModel = new WorkoutSessionDetailCreateViewModel
         {
@@ -50,7 +44,10 @@ public class WorkoutSessionDetailsController : Controller
         {
             var exercisesResult = await _exerciseService.GetAllExercisesAsync();
             if (!exercisesResult.IsSuccess)
-                return View("Error", exercisesResult.Error);
+            {
+                TempData["Error"] = exercisesResult.Error.Description;
+                return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+            }
 
             var viewModel = new WorkoutSessionDetailCreateViewModel
             {
@@ -64,20 +61,30 @@ public class WorkoutSessionDetailsController : Controller
 
         var result = await _workoutSessionDetailsService.AddWorkoutSessionDetailAsync(workoutSessionId, request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
-        return RedirectToAction(nameof(Index), new { workoutSessionId });
+        TempData["Success"] = "Workout session detail added successfully.";
+        return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
     }
 
     public async Task<IActionResult> Edit(int id, int workoutSessionId)
     {
         var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(id);
         if (!detailResult.IsSuccess)
-            return View("Error", detailResult.Error);
+        {
+            TempData["Error"] = detailResult.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
         var exercisesResult = await _exerciseService.GetAllExercisesAsync();
         if (!exercisesResult.IsSuccess)
-            return View("Error", exercisesResult.Error);
+        {
+            TempData["Error"] = exercisesResult.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
         var request = new WorkoutSessionDetailRequest
         {
@@ -110,7 +117,10 @@ public class WorkoutSessionDetailsController : Controller
         {
             var exercisesResult = await _exerciseService.GetAllExercisesAsync();
             if (!exercisesResult.IsSuccess)
-                return View("Error", exercisesResult.Error);
+            {
+                TempData["Error"] = exercisesResult.Error.Description;
+                return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+            }
 
             var viewModel = new WorkoutSessionDetailEditViewModel
             {
@@ -125,16 +135,23 @@ public class WorkoutSessionDetailsController : Controller
 
         var result = await _workoutSessionDetailsService.UpdateWorkoutSessionDetailAsync(id, request);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
-        return RedirectToAction(nameof(Index), new { workoutSessionId });
+        TempData["Success"] = "Workout session detail updated successfully.";
+        return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
     }
 
     public async Task<IActionResult> Details(int id, int workoutSessionId)
     {
         var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(id);
         if (!detailResult.IsSuccess)
-            return View("Error", detailResult.Error);
+        {
+            TempData["Error"] = detailResult.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
         var viewModel = new WorkoutSessionDetailDetailsViewModel
         {
@@ -151,8 +168,12 @@ public class WorkoutSessionDetailsController : Controller
     {
         var result = await _workoutSessionDetailsService.RemoveWorkoutSessionDetailAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+        {
+            TempData["Error"] = result.Error.Description;
+            return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
+        }
 
-        return RedirectToAction(nameof(Index), new { workoutSessionId });
+        TempData["Success"] = "Workout session detail deleted successfully.";
+        return RedirectToAction(nameof(Details), "WorkoutSessions", new { id = workoutSessionId });
     }
 }

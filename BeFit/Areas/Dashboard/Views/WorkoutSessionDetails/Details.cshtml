@@ -151,11 +151,11 @@
 
                 <div class="d-flex gap-2 mt-4">
                     <a asp-area="Dashboard"
-                       asp-controller="WorkoutSessionDetails"
-                       asp-action="Index"
-                       asp-route-workoutSessionId="@Model.WorkoutSessionId"
+                       asp-controller="WorkoutSessions"
+                       asp-action="Details"
+                       asp-route-id="@Model.WorkoutSessionId"
                        class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left me-1"></i>Back to List
+                        <i class="bi bi-arrow-left me-1"></i>Back to Workout Session
                     </a>
                     <a asp-area="Dashboard"
                        asp-controller="WorkoutSessionDetails"

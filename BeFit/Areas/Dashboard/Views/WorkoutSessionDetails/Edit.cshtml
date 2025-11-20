@@ -110,9 +110,9 @@
                             <i class="bi bi-check-circle me-1"></i>Update Detail
                         </button>
                         <a asp-area="Dashboard"
-                           asp-controller="WorkoutSessionDetails"
-                           asp-action="Index"
-                           asp-route-workoutSessionId="@Model.WorkoutSessionId"
+                           asp-controller="WorkoutSessions"
+                           asp-action="Details"
+                           asp-route-id="@Model.WorkoutSessionId"
                            class="btn btn-outline-secondary">
                             <i class="bi bi-x-circle me-1"></i>Cancel
                         </a>

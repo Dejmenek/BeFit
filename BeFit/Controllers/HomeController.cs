@@ -2,31 +2,20 @@ using System.Diagnostics;
 using BeFit.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BeFit.Controllers
+namespace BeFit.Controllers;
+
+public class HomeController : BaseController
 {
-    public class HomeController : Controller
+    public IActionResult Index() => View();
+
+    public IActionResult About() => View();
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        return View("Error", new ErrorViewModel
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        });
     }
 }

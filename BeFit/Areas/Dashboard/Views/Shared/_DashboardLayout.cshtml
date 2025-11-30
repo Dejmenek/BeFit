@@ -76,15 +76,6 @@
                         <span class="sidebar-text">Workout Templates</span>
                     </a>
                 </li>
-                <li>
-                    <a class="sidebar-link @(currentController == "WorkoutTemplateExercises" ? "active" : "")"
-                       asp-area="Dashboard"
-                       asp-controller="WorkoutTemplateExercises"
-                       asp-action="Index">
-                        <i class="bi bi-diagram-3"></i>
-                        <span class="sidebar-text">Workout Template Exercises</span>
-                    </a>
-                </li>
             </ul>
             <div class="sidebar-logout px-2 pb-3">
                 <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="m-0">

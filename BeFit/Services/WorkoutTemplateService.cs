@@ -54,13 +54,14 @@ public class WorkoutTemplateService : IWorkoutTemplateService
                 .OrderBy(wt => wt.Name)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(wt => new WorkoutTemplateResponse(
-                    wt.Id,
-                    wt.Name,
-                    wt.Description,
-                    wt.Goals,
-                    wt.PreferredDay
-                ))
+                .Select(wt => new WorkoutTemplateResponse
+                {
+                    Id = wt.Id,
+                    Name = wt.Name,
+                    Description = wt.Description,
+                    Goals = wt.Goals,
+                    PreferredDay = wt.PreferredDay
+                })
                 .ToListAsync();
 
             var paginatedList = new PaginatedList<WorkoutTemplateResponse>(items, totalItems, pageNumber, pageSize);
@@ -84,13 +85,14 @@ public class WorkoutTemplateService : IWorkoutTemplateService
             if (workoutTemplate == null)
                 return Result.Failure<WorkoutTemplateResponse>(Error.NotFound("WorkoutTemplateNotFound", "Workout template not found"));
 
-            var response = new WorkoutTemplateResponse(
-                workoutTemplate.Id,
-                workoutTemplate.Name,
-                workoutTemplate.Description,
-                workoutTemplate.Goals,
-                workoutTemplate.PreferredDay
-            );
+            var response = new WorkoutTemplateResponse
+            {
+                Id = workoutTemplate.Id,
+                Name = workoutTemplate.Name,
+                Description = workoutTemplate.Description,
+                Goals = workoutTemplate.Goals,
+                PreferredDay = workoutTemplate.PreferredDay
+            };
 
             return Result.Success(response);
         }

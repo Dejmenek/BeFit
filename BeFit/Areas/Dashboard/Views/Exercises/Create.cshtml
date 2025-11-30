@@ -20,7 +20,7 @@
                     @Html.AntiForgeryToken()
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label fw-semibold">
-                            <i class="bi bi-tag text-purple me-1"></i>Exercise Name
+                            <i class="bi bi-tag text-purple me-1"></i>@Html.DisplayNameFor(m => m.Name)
                         </label>
                         <input asp-for="Name" class="form-control" maxlength="100" required placeholder="Enter exercise name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="Category" class="form-label fw-semibold">
-                                <i class="bi bi-grid text-purple me-1"></i>Category
+                                <i class="bi bi-grid text-purple me-1"></i>@Html.DisplayNameFor(m => m.Category)
                             </label>
                             <select asp-for="Category" class="form-select" required>
                                 <option value="">-- Select Category --</option>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="TargetMuscle" class="form-label fw-semibold">
-                                <i class="bi bi-heart-pulse text-purple me-1"></i>Target Muscle
+                                <i class="bi bi-heart-pulse text-purple me-1"></i>@Html.DisplayNameFor(m => m.TargetMuscle)
                             </label>
                             <select asp-for="TargetMuscle" class="form-select" required>
                                 <option value="">-- Select Target Muscle --</option>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Difficulty" class="form-label fw-semibold">
-                            <i class="bi bi-bar-chart text-purple me-1"></i>Difficulty Level
+                            <i class="bi bi-bar-chart text-purple me-1"></i>@Html.DisplayNameFor(m => m.Difficulty)
                         </label>
                         <select asp-for="Difficulty" class="form-select" required>
                             <option value="">-- Select Difficulty --</option>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Instructions" class="form-label fw-semibold">
-                            <i class="bi bi-list-ol text-purple me-1"></i>Instructions
+                            <i class="bi bi-list-ol text-purple me-1"></i>@Html.DisplayNameFor(m => m.Instructions)
                         </label>
                         <textarea asp-for="Instructions" class="form-control" maxlength="500" rows="5" required placeholder="Enter step-by-step instructions for performing this exercise"></textarea>
                         <div class="form-text">Maximum 500 characters</div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="mb-4">
                         <label asp-for="Equipment" class="form-label fw-semibold">
-                            <i class="bi bi-tools text-purple me-1"></i>Equipment <span class="text-muted">(Optional)</span>
+                            <i class="bi bi-tools text-purple me-1"></i>@Html.DisplayNameFor(m => m.Equipment) <span class="text-muted">(Optional)</span>
                         </label>
                         <input asp-for="Equipment" class="form-control" maxlength="200" placeholder="e.g., Dumbbells, Barbell, Resistance Bands" />
                         <span asp-validation-for="Equipment" class="text-danger"></span>

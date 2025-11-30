@@ -4,8 +4,13 @@ namespace BeFit.DTOs;
 
 public record WorkoutSessionRequest : IValidatableObject
 {
+    [Display(Name = "Start Date & Time")]
     public DateTime StartDate { get; init; }
+    
+    [Display(Name = "End Date & Time")]
     public DateTime EndDate { get; init; }
+    
+    [Display(Name = "Notes")]
     public string Notes { get; init; } = string.Empty;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

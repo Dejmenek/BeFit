@@ -35,12 +35,12 @@
             <table class="table table-bordered table-striped table-hover shadow-sm">
                 <thead class="table-light">
                     <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Target Muscle</th>
-                        <th>Difficulty</th>
-                        <th>Instructions</th>
-                        <th>Equipment</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Name)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Category)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.TargetMuscle)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Difficulty)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Instructions)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Equipment)</th>
                         <th style="width: 150px;">Actions</th>
                     </tr>
                 </thead>

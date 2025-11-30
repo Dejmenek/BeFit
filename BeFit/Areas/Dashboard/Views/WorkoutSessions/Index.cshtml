@@ -35,9 +35,9 @@
             <table class="table table-bordered table-striped table-hover shadow-sm">
                 <thead class="table-light">
                     <tr>
-                        <th>Date</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.StartDate)</th>
                         <th>Duration</th>
-                        <th>Notes</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Notes)</th>
                         <th style="width: 200px;">Actions</th>
                     </tr>
                 </thead>

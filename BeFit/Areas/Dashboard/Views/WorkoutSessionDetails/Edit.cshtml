@@ -1,4 +1,4 @@
-﻿@using BeFit.DTOs
+@using BeFit.DTOs
 @model WorkoutSessionDetailEditViewModel
 
 @{
@@ -27,7 +27,7 @@
                     
                     <div class="mb-3">
                         <label asp-for="Request.ExerciseId" class="form-label fw-semibold">
-                            <i class="bi bi-activity text-purple me-1"></i>Exercise <span class="text-danger-emphasis">*</span>
+                            <i class="bi bi-activity text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.ExerciseId) <span class="text-danger-emphasis">*</span>
                         </label>
                         <select asp-for="Request.ExerciseId" class="form-select" required>
                             <option value="">-- Select Exercise --</option>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.Sets" class="form-label fw-semibold">
-                                <i class="bi bi-list-ol text-purple me-1"></i>Sets <span class="text-muted">(Optional)</span>
+                                <i class="bi bi-list-ol text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.Sets) <span class="text-muted">(Optional)</span>
                             </label>
                             <input asp-for="Request.Sets" type="number" class="form-control" min="1" max="10" placeholder="Enter number of sets" />
                             <div class="form-text">Range: 1-10</div>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.Repetitions" class="form-label fw-semibold">
-                                <i class="bi bi-arrow-repeat text-purple me-1"></i>Repetitions <span class="text-muted">(Optional)</span>
+                                <i class="bi bi-arrow-repeat text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.Repetitions) <span class="text-muted">(Optional)</span>
                             </label>
                             <input asp-for="Request.Repetitions" type="number" class="form-control" min="1" max="100" placeholder="Enter number of repetitions" />
                             <div class="form-text">Range: 1-100</div>
@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.Weight" class="form-label fw-semibold">
-                                <i class="bi bi-speedometer2 text-purple me-1"></i>Weight (kg) <span class="text-muted">(Optional)</span>
+                                <i class="bi bi-speedometer2 text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.Weight) <span class="text-muted">(Optional)</span>
                             </label>
                             <input asp-for="Request.Weight" type="number" step="0.01" class="form-control" min="0" max="1000" placeholder="Enter weight in kg" />
                             <div class="form-text">Range: 0-1000 kg</div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.RestTimeInSeconds" class="form-label fw-semibold">
-                                <i class="bi bi-clock text-purple me-1"></i>Rest Time (seconds) <span class="text-danger-emphasis">*</span>
+                                <i class="bi bi-clock text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.RestTimeInSeconds) <span class="text-danger-emphasis">*</span>
                             </label>
                             <input asp-for="Request.RestTimeInSeconds" type="number" class="form-control" min="0" max="1800" required placeholder="Enter rest time in seconds" />
                             <div class="form-text">Range: 0-1800 seconds (0-30 minutes)</div>
@@ -80,7 +80,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.Tempo" class="form-label fw-semibold">
-                                <i class="bi bi-stopwatch text-purple me-1"></i>Tempo <span class="text-muted">(Optional)</span>
+                                <i class="bi bi-stopwatch text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.Tempo) <span class="text-muted">(Optional)</span>
                             </label>
                             <input asp-for="Request.Tempo" type="text" class="form-control" maxlength="32" placeholder="e.g., 2-1-2-0" />
                             <div class="form-text">Maximum 32 characters (e.g., 2-1-2-0 for eccentric-pause-concentric-pause)</div>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Request.DurationInSeconds" class="form-label fw-semibold">
-                                <i class="bi bi-hourglass-split text-purple me-1"></i>Duration (seconds) <span class="text-muted">(Optional)</span>
+                                <i class="bi bi-hourglass-split text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.DurationInSeconds) <span class="text-muted">(Optional)</span>
                             </label>
                             <input asp-for="Request.DurationInSeconds" type="number" class="form-control" min="0" max="36000" placeholder="Enter duration in seconds" />
                             <div class="form-text">Range: 0-36000 seconds (0-10 hours)</div>
@@ -98,7 +98,7 @@
 
                     <div class="mb-4">
                         <label asp-for="Request.Distance" class="form-label fw-semibold">
-                            <i class="bi bi-signpost-2 text-purple me-1"></i>Distance (km) <span class="text-muted">(Optional)</span>
+                            <i class="bi bi-signpost-2 text-purple me-1"></i>@Html.DisplayNameFor(m => m.Request.Distance) <span class="text-muted">(Optional)</span>
                         </label>
                         <input asp-for="Request.Distance" type="number" step="0.01" class="form-control" min="0" max="100" placeholder="Enter distance in km" />
                         <div class="form-text">Range: 0-100 km</div>

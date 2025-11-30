@@ -16,17 +16,17 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="Id" />
                 <div class="mb-3">
-                    <label asp-for="StartDate" class="form-label">Start Date & Time</label>
+                    <label asp-for="StartDate" class="form-label">@Html.DisplayNameFor(m => m.StartDate)</label>
                     <input asp-for="StartDate" class="form-control" type="datetime-local" />
                     <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="EndDate" class="form-label">End Date & Time</label>
+                    <label asp-for="EndDate" class="form-label">@Html.DisplayNameFor(m => m.EndDate)</label>
                     <input asp-for="EndDate" class="form-control" type="datetime-local" />
                     <span asp-validation-for="EndDate" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Notes" class="form-label">Notes</label>
+                    <label asp-for="Notes" class="form-label">@Html.DisplayNameFor(m => m.Notes)</label>
                     <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="Notes" class="text-danger"></span>
                 </div>

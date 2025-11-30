@@ -1,4 +1,4 @@
-﻿@using BeFit.DTOs
+@using BeFit.DTOs
 @using BeFit.Results
 @model PaginatedList<WorkoutTemplateResponse>
 @{
@@ -41,10 +41,10 @@
             <table class="table table-bordered table-striped table-hover shadow-sm">
                 <thead class="table-light">
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Goals</th>
-                        <th>Preferred Day</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Name)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Description)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.Goals)</th>
+                        <th>@Html.DisplayNameFor(m => m.Items.FirstOrDefault()!.PreferredDay)</th>
                         <th style="width: 200px;">Actions</th>
                     </tr>
                 </thead>

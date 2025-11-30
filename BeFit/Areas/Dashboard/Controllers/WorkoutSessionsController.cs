@@ -87,7 +87,13 @@ public class WorkoutSessionsController : BaseController
     {
         if (!ModelState.IsValid)
         {
-            var response = new WorkoutSessionResponse(id, request.StartDate, request.EndDate, request.Notes);
+            var response = new WorkoutSessionResponse
+            {
+                Id = id,
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+                Notes = request.Notes
+            };
             return View(response);
         }
 

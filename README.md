@@ -17,7 +17,6 @@
 **BeFit** is a comprehensive fitness tracking web application designed to help users monitor their workouts, track progress, and achieve their fitness goals. This is an **academic project** developed as part of coursework, demonstrating modern web development practices using ASP.NET Core.
 
 The application provides a user-friendly interface for managing exercises, creating workout templates, logging workout sessions, and analyzing fitness statistics. BeFit helps fitness enthusiasts stay consistent with their training by offering features like workout templates, session tracking, and progress analytics.
-Developed as an academic project.
 
 ### Used Technologies
 

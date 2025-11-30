@@ -13,7 +13,6 @@
 **BeFit** to kompleksowa aplikacja webowa do śledzenia treningów, zaprojektowana w celu pomocy użytkownikom w monitorowaniu treningów, śledzeniu postępów i osiąganiu celów fitness. Jest to **projekt akademicki** opracowany w ramach zajęć, demonstrujący nowoczesne praktyki tworzenia aplikacji webowych przy użyciu ASP.NET Core.
 
 Aplikacja oferuje przyjazny interfejs do zarządzania ćwiczeniami, tworzenia szablonów treningowych, logowania sesji treningowych i analizowania statystyk fitness. BeFit pomaga entuzjastom fitness utrzymać regularność treningów, oferując funkcje takie jak szablony treningowe, śledzenie sesji i analityka postępów.
-Opracowane jako projekt akademicki.
 
 ### Użyte Technologie
 

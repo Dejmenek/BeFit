@@ -40,54 +40,95 @@ public static class DataSeeder
             userIds.Add(user.Id);
         }
 
-        if (!await db.Exercises.AnyAsync())
+        var pushUpExercise = await db.Exercises.FirstOrDefaultAsync(e => e.Name == "Push Up");
+        if (pushUpExercise == null)
         {
-            db.Exercises.AddRange(
-                new Exercise { Name = "Push Up", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Chest, Difficulty = Difficulty.Beginner, Instructions = "Start in plank position, lower body, push up." },
-                new Exercise { Name = "Squat", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Legs, Difficulty = Difficulty.Beginner, Instructions = "Stand, lower hips, return." },
-                new Exercise { Name = "Plank", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Core, Difficulty = Difficulty.Intermediate, Instructions = "Hold plank position." }
-            );
-            await db.SaveChangesAsync();
+            pushUpExercise = new Exercise { Name = "Push Up", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Chest, Difficulty = Difficulty.Beginner, Instructions = "Start in plank position, lower body, push up." };
+            db.Exercises.Add(pushUpExercise);
         }
 
-        if (!await db.WorkoutTemplates.AnyAsync())
+        var squatExercise = await db.Exercises.FirstOrDefaultAsync(e => e.Name == "Squat");
+        if (squatExercise == null)
         {
-            db.WorkoutTemplates.AddRange(
-                new WorkoutTemplate { UserId = userIds[0], Name = "Beginner Strength", Description = "Simple strength workout.", Goals = "Build strength.", PreferredDay = DayOfWeek.Monday },
-                new WorkoutTemplate { UserId = userIds[2], Name = "Core Focus", Description = "Core muscle workout.", Goals = "Improve core stability.", PreferredDay = DayOfWeek.Wednesday }
-            );
-            await db.SaveChangesAsync();
+            squatExercise = new Exercise { Name = "Squat", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Legs, Difficulty = Difficulty.Beginner, Instructions = "Stand, lower hips, return." };
+            db.Exercises.Add(squatExercise);
         }
 
-        if (!await db.WorkoutTemplateExercises.AnyAsync())
+        var plankExercise = await db.Exercises.FirstOrDefaultAsync(e => e.Name == "Plank");
+        if (plankExercise == null)
         {
-            db.WorkoutTemplateExercises.AddRange(
-                new WorkoutTemplateExercise { WorkoutTemplateId = 1, ExerciseId = 1, Order = 1, TargetSets = 3, TargetReps = 10, RestTimeInSeconds = 60, Tempo = "2-1-2" },
-                new WorkoutTemplateExercise { WorkoutTemplateId = 1, ExerciseId = 2, Order = 2, TargetSets = 3, TargetReps = 15, RestTimeInSeconds = 60, Tempo = "2-1-2" },
-                new WorkoutTemplateExercise { WorkoutTemplateId = 2, ExerciseId = 3, Order = 1, TargetSets = 2, TargetDurationInSeconds = 60, RestTimeInSeconds = 90 }
-            );
-            await db.SaveChangesAsync();
+            plankExercise = new Exercise { Name = "Plank", Category = ExerciseType.Strength, TargetMuscle = MuscleType.Core, Difficulty = Difficulty.Intermediate, Instructions = "Hold plank position." };
+            db.Exercises.Add(plankExercise);
+        }
+        await db.SaveChangesAsync();
+
+        var beginnerStrengthTemplate = await db.WorkoutTemplates.FirstOrDefaultAsync(wt => wt.Name == "Beginner Strength" && wt.UserId == userIds[0]);
+        if (beginnerStrengthTemplate == null)
+        {
+            beginnerStrengthTemplate = new WorkoutTemplate { UserId = userIds[0], Name = "Beginner Strength", Description = "Simple strength workout.", Goals = "Build strength.", PreferredDay = DayOfWeek.Monday };
+            db.WorkoutTemplates.Add(beginnerStrengthTemplate);
         }
 
-        if (!await db.WorkoutSessions.AnyAsync())
+        var coreFocusTemplate = await db.WorkoutTemplates.FirstOrDefaultAsync(wt => wt.Name == "Core Focus" && wt.UserId == userIds[2]);
+        if (coreFocusTemplate == null)
         {
-            db.WorkoutSessions.AddRange(
-                new WorkoutSession { UserId = userIds[0], StartDate = new DateTime(2025, 10, 30, 8, 0, 0), EndDate = new DateTime(2025, 10, 30, 8, 45, 0), Notes = "First session." },
-                new WorkoutSession { UserId = userIds[1], StartDate = new DateTime(2025, 10, 31, 9, 0, 0), EndDate = new DateTime(2025, 10, 31, 9, 30, 0), Notes = "User2 session." },
-                new WorkoutSession { UserId = userIds[2], StartDate = new DateTime(2025, 11, 1, 7, 0, 0), EndDate = new DateTime(2025, 11, 1, 7, 40, 0), Notes = "Admin session." }
-            );
-            await db.SaveChangesAsync();
+            coreFocusTemplate = new WorkoutTemplate { UserId = userIds[2], Name = "Core Focus", Description = "Core muscle workout.", Goals = "Improve core stability.", PreferredDay = DayOfWeek.Wednesday };
+            db.WorkoutTemplates.Add(coreFocusTemplate);
+        }
+        await db.SaveChangesAsync();
+
+        if (!await db.WorkoutTemplateExercises.AnyAsync(wte => wte.WorkoutTemplateId == beginnerStrengthTemplate.Id && wte.ExerciseId == pushUpExercise.Id))
+        {
+            db.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise { WorkoutTemplateId = beginnerStrengthTemplate.Id, ExerciseId = pushUpExercise.Id, Order = 1, TargetSets = 3, TargetReps = 10, RestTimeInSeconds = 60, Tempo = "2-1-2" });
+        }
+        if (!await db.WorkoutTemplateExercises.AnyAsync(wte => wte.WorkoutTemplateId == beginnerStrengthTemplate.Id && wte.ExerciseId == squatExercise.Id))
+        {
+            db.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise { WorkoutTemplateId = beginnerStrengthTemplate.Id, ExerciseId = squatExercise.Id, Order = 2, TargetSets = 3, TargetReps = 15, RestTimeInSeconds = 60, Tempo = "2-1-2" });
+        }
+        if (!await db.WorkoutTemplateExercises.AnyAsync(wte => wte.WorkoutTemplateId == coreFocusTemplate.Id && wte.ExerciseId == plankExercise.Id))
+        {
+            db.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise { WorkoutTemplateId = coreFocusTemplate.Id, ExerciseId = plankExercise.Id, Order = 1, TargetSets = 2, TargetDurationInSeconds = 60, RestTimeInSeconds = 90 });
+        }
+        await db.SaveChangesAsync();
+
+        var session1 = await db.WorkoutSessions.FirstOrDefaultAsync(ws => ws.UserId == userIds[0] && ws.StartDate == new DateTime(2025, 10, 30, 8, 0, 0));
+        if (session1 == null)
+        {
+            session1 = new WorkoutSession { UserId = userIds[0], StartDate = new DateTime(2025, 10, 30, 8, 0, 0), EndDate = new DateTime(2025, 10, 30, 8, 45, 0), Notes = "First session." };
+            db.WorkoutSessions.Add(session1);
         }
 
-        if (!await db.WorkoutSessionDetails.AnyAsync())
+        var session2 = await db.WorkoutSessions.FirstOrDefaultAsync(ws => ws.UserId == userIds[1] && ws.StartDate == new DateTime(2025, 10, 31, 9, 0, 0));
+        if (session2 == null)
         {
-            db.WorkoutSessionDetails.AddRange(
-                new WorkoutSessionDetails { WorkoutSessionId = 1, ExerciseId = 1, Sets = 3, Repetitions = 10, RestTimeInSeconds = 60, Tempo = "2-1-2" },
-                new WorkoutSessionDetails { WorkoutSessionId = 1, ExerciseId = 2, Sets = 3, Repetitions = 15, RestTimeInSeconds = 60, Tempo = "2-1-2" },
-                new WorkoutSessionDetails { WorkoutSessionId = 2, ExerciseId = 2, Sets = 2, Repetitions = 12, RestTimeInSeconds = 60, Tempo = "2-1-2" },
-                new WorkoutSessionDetails { WorkoutSessionId = 3, ExerciseId = 3, Sets = 2, DurationInSeconds = 60, RestTimeInSeconds = 90 }
-            );
-            await db.SaveChangesAsync();
+            session2 = new WorkoutSession { UserId = userIds[1], StartDate = new DateTime(2025, 10, 31, 9, 0, 0), EndDate = new DateTime(2025, 10, 31, 9, 30, 0), Notes = "User2 session." };
+            db.WorkoutSessions.Add(session2);
         }
+
+        var session3 = await db.WorkoutSessions.FirstOrDefaultAsync(ws => ws.UserId == userIds[2] && ws.StartDate == new DateTime(2025, 11, 1, 7, 0, 0));
+        if (session3 == null)
+        {
+            session3 = new WorkoutSession { UserId = userIds[2], StartDate = new DateTime(2025, 11, 1, 7, 0, 0), EndDate = new DateTime(2025, 11, 1, 7, 40, 0), Notes = "Admin session." };
+            db.WorkoutSessions.Add(session3);
+        }
+        await db.SaveChangesAsync();
+
+        if (!await db.WorkoutSessionDetails.AnyAsync(wsd => wsd.WorkoutSessionId == session1.Id && wsd.ExerciseId == pushUpExercise.Id))
+        {
+            db.WorkoutSessionDetails.Add(new WorkoutSessionDetails { WorkoutSessionId = session1.Id, ExerciseId = pushUpExercise.Id, Sets = 3, Repetitions = 10, RestTimeInSeconds = 60, Tempo = "2-1-2" });
+        }
+        if (!await db.WorkoutSessionDetails.AnyAsync(wsd => wsd.WorkoutSessionId == session1.Id && wsd.ExerciseId == squatExercise.Id))
+        {
+            db.WorkoutSessionDetails.Add(new WorkoutSessionDetails { WorkoutSessionId = session1.Id, ExerciseId = squatExercise.Id, Sets = 3, Repetitions = 15, RestTimeInSeconds = 60, Tempo = "2-1-2" });
+        }
+        if (!await db.WorkoutSessionDetails.AnyAsync(wsd => wsd.WorkoutSessionId == session2.Id && wsd.ExerciseId == squatExercise.Id))
+        {
+            db.WorkoutSessionDetails.Add(new WorkoutSessionDetails { WorkoutSessionId = session2.Id, ExerciseId = squatExercise.Id, Sets = 2, Repetitions = 12, RestTimeInSeconds = 60, Tempo = "2-1-2" });
+        }
+        if (!await db.WorkoutSessionDetails.AnyAsync(wsd => wsd.WorkoutSessionId == session3.Id && wsd.ExerciseId == plankExercise.Id))
+        {
+            db.WorkoutSessionDetails.Add(new WorkoutSessionDetails { WorkoutSessionId = session3.Id, ExerciseId = plankExercise.Id, Sets = 2, DurationInSeconds = 60, RestTimeInSeconds = 90 });
+        }
+        await db.SaveChangesAsync();
     }
 }

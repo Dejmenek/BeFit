@@ -75,12 +75,12 @@ public class WorkoutSessionService : IWorkoutSessionService
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(ws => new WorkoutSessionResponse
-                (
-                    ws.Id,
-                    ws.StartDate,
-                    ws.EndDate,
-                    ws.Notes
-                ))
+                {
+                    Id = ws.Id,
+                    StartDate = ws.StartDate,
+                    EndDate = ws.EndDate,
+                    Notes = ws.Notes
+                })
                 .ToListAsync();
 
             var paginatedList = new PaginatedList<WorkoutSessionResponse>(items, totalItems, pageNumber, pageSize);
@@ -129,12 +129,12 @@ public class WorkoutSessionService : IWorkoutSessionService
                 return Result.Failure<WorkoutSessionResponse>(Error.NotFound("WorkoutSessionNotFound", "Workout session not found"));
 
             var response = new WorkoutSessionResponse
-            (
-                session.Id,
-                session.StartDate,
-                session.EndDate,
-                session.Notes
-            );
+            {
+                Id = session.Id,
+                StartDate = session.StartDate,
+                EndDate = session.EndDate,
+                Notes = session.Notes
+            };
 
             return Result.Success(response);
         }

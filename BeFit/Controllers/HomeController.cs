@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BeFit.Controllers;
 
-public class HomeController : BaseController
+public class HomeController : Controller
 {
     public IActionResult Index() => View();
 

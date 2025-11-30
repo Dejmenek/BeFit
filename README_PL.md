@@ -147,12 +147,13 @@ dotnet run
 ### Przykłady
 
 #### Strona Główna
+<img width="1868" height="892" alt="image" src="https://github.com/user-attachments/assets/3d42cc9d-6618-42be-bbce-cd9342157d48" />
 
 #### Panel
+<img width="1868" height="892" alt="image" src="https://github.com/user-attachments/assets/3e3f15b8-b8f4-408a-944b-6c2c4fb63c53" />
 
 #### Szablony Treningowe
+<img width="1868" height="892" alt="image" src="https://github.com/user-attachments/assets/64bb7d88-8a04-4b94-829c-8258ade9289b" />
 
 #### Sesja Treningowa
-
-#### Statystyki Ćwiczeń
-
+<img width="1868" height="892" alt="image" src="https://github.com/user-attachments/assets/eca32261-5736-4f4e-a330-783a068e01ab" />

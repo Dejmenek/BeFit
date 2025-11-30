@@ -1,0 +1,142 @@
+﻿@using BeFit.DTOs
+@model WorkoutTemplateExerciseEditViewModel
+
+@{
+    ViewData["Title"] = "Update Workout Template Exercise";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="card p-0 border-0 shadow-sm">
+            <div class="card-header bg-purple text-white">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-pencil-square me-2" style="font-size: 1.5rem;"></i>
+                    <h4 class="mb-0">Update Workout Template Exercise</h4>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-area="Dashboard"
+                      asp-controller="WorkoutTemplateExercises"
+                      asp-action="Edit"
+                      asp-route-id="@Model.Id"
+                      asp-route-workoutTemplateId="@Model.WorkoutTemplateId"
+                      method="post"
+                      class="needs-validation"
+                      novalidate>
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="mb-3">
+                        <label asp-for="Request.ExerciseId" class="form-label fw-semibold">
+                            <i class="bi bi-activity text-purple me-1"></i>Exercise <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <select asp-for="Request.ExerciseId" class="form-select" required>
+                            <option value="">-- Select Exercise --</option>
+                            @foreach (var exercise in Model.Exercises)
+                            {
+                                @if (Model.Request.ExerciseId == exercise.Id)
+                                {
+                                    <option value="@exercise.Id" selected>@exercise.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@exercise.Id">@exercise.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Request.ExerciseId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Request.Order" class="form-label fw-semibold">
+                            <i class="bi bi-list-ol text-purple me-1"></i>Order <span class="text-danger-emphasis">*</span>
+                        </label>
+                        <input asp-for="Request.Order" type="number" class="form-control" min="1" required placeholder="Enter exercise order" />
+                        <div class="form-text">The order in which this exercise appears in the template (must be unique)</div>
+                        <span asp-validation-for="Request.Order" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.TargetSets" class="form-label fw-semibold">
+                                <i class="bi bi-list-ol text-purple me-1"></i>Target Sets <span class="text-muted">(Optional)</span>
+                            </label>
+                            <input asp-for="Request.TargetSets" type="number" class="form-control" min="0" placeholder="Enter target sets" />
+                            <span asp-validation-for="Request.TargetSets" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.TargetReps" class="form-label fw-semibold">
+                                <i class="bi bi-arrow-repeat text-purple me-1"></i>Target Reps <span class="text-muted">(Optional)</span>
+                            </label>
+                            <input asp-for="Request.TargetReps" type="number" class="form-control" min="0" placeholder="Enter target reps" />
+                            <span asp-validation-for="Request.TargetReps" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.TargetWeight" class="form-label fw-semibold">
+                                <i class="bi bi-speedometer2 text-purple me-1"></i>Target Weight (kg) <span class="text-muted">(Optional)</span>
+                            </label>
+                            <input asp-for="Request.TargetWeight" type="number" step="0.01" class="form-control" min="0" max="1000" placeholder="Enter target weight in kg" />
+                            <div class="form-text">Range: 0-1000 kg</div>
+                            <span asp-validation-for="Request.TargetWeight" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.RestTimeInSeconds" class="form-label fw-semibold">
+                                <i class="bi bi-clock text-purple me-1"></i>Rest Time (seconds) <span class="text-danger-emphasis">*</span>
+                            </label>
+                            <input asp-for="Request.RestTimeInSeconds" type="number" class="form-control" min="0" max="1800" required placeholder="Enter rest time in seconds" />
+                            <div class="form-text">Range: 0-1800 seconds (0-30 minutes)</div>
+                            <span asp-validation-for="Request.RestTimeInSeconds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.Tempo" class="form-label fw-semibold">
+                                <i class="bi bi-stopwatch text-purple me-1"></i>Tempo <span class="text-muted">(Optional)</span>
+                            </label>
+                            <input asp-for="Request.Tempo" type="text" class="form-control" maxlength="32" placeholder="e.g., 2-1-2-0" />
+                            <div class="form-text">Maximum 32 characters (e.g., 2-1-2-0 for eccentric-pause-concentric-pause)</div>
+                            <span asp-validation-for="Request.Tempo" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Request.TargetDurationInSeconds" class="form-label fw-semibold">
+                                <i class="bi bi-hourglass-split text-purple me-1"></i>Target Duration (seconds) <span class="text-muted">(Optional)</span>
+                            </label>
+                            <input asp-for="Request.TargetDurationInSeconds" type="number" class="form-control" min="0" max="36000" placeholder="Enter target duration in seconds" />
+                            <div class="form-text">Range: 0-36000 seconds (0-10 hours)</div>
+                            <span asp-validation-for="Request.TargetDurationInSeconds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Request.TargetDistance" class="form-label fw-semibold">
+                            <i class="bi bi-signpost-2 text-purple me-1"></i>Target Distance (km) <span class="text-muted">(Optional)</span>
+                        </label>
+                        <input asp-for="Request.TargetDistance" type="number" step="0.01" class="form-control" min="0" max="100" placeholder="Enter target distance in km" />
+                        <div class="form-text">Range: 0-100 km</div>
+                        <span asp-validation-for="Request.TargetDistance" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-purple">
+                            <i class="bi bi-check-circle me-1"></i>Update Exercise
+                        </button>
+                        <a asp-area="Dashboard"
+                           asp-controller="WorkoutTemplates"
+                           asp-action="Details"
+                           asp-route-id="@Model.WorkoutTemplateId"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

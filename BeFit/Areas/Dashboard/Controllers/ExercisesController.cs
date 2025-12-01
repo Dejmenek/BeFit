@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace BeFit.Areas.Dashboard.Controllers;
 
 [Area("Dashboard")]
-[Authorize(Roles = "Admin")]
 public class ExercisesController : BaseController
 {
     private readonly IExerciseService _exerciseService;
@@ -16,6 +15,7 @@ public class ExercisesController : BaseController
         _exerciseService = exerciseService;
     }
 
+    [Authorize]
     public async Task<IActionResult> Index(int pageNumber = 1)
     {
         var result = await _exerciseService.GetExercisesAsync(pageNumber, 10);
@@ -25,6 +25,7 @@ public class ExercisesController : BaseController
         return View(result.Value);
     }
 
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
@@ -32,6 +33,7 @@ public class ExercisesController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(ExerciseRequest request)
     {
         if (!ModelState.IsValid)
@@ -48,6 +50,7 @@ public class ExercisesController : BaseController
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int id)
     {
         var result = await _exerciseService.GetExercisesAsync(1, int.MaxValue);
@@ -73,6 +76,7 @@ public class ExercisesController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int id, ExerciseRequest request)
     {
         if (!ModelState.IsValid)
@@ -91,6 +95,7 @@ public class ExercisesController : BaseController
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var result = await _exerciseService.RemoveSingleExerciseAsync(id);

@@ -46,18 +46,15 @@
                         <span class="sidebar-text">Home Page</span>
                     </a>
                 </li>
-                @if (User.IsInRole("Admin"))
-                {
-                    <li>
-                        <a class="sidebar-link @(currentController == "Exercises" ? "active" : "")"
-                           asp-area="Dashboard"
-                           asp-controller="Exercises"
-                           asp-action="Index">
-                            <i class="bi bi-box"></i>
-                            <span class="sidebar-text">Exercises</span>
-                        </a>
-                    </li>
-                }
+                <li>
+                    <a class="sidebar-link @(currentController == "Exercises" ? "active" : "")"
+                       asp-area="Dashboard"
+                       asp-controller="Exercises"
+                       asp-action="Index">
+                        <i class="bi bi-box"></i>
+                        <span class="sidebar-text">Exercises</span>
+                    </a>
+                </li>
                 <li>
                     <a class="sidebar-link @(currentController == "WorkoutSessions" ? "active" : "")"
                        asp-area="Dashboard"

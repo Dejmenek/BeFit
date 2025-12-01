@@ -1,12 +1,28 @@
 using System.Diagnostics;
+using BeFit.DTOs;
 using BeFit.Models;
+using BeFit.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeFit.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index() => View();
+    private readonly IExerciseService _exerciseService;
+
+    public HomeController(IExerciseService exerciseService)
+    {
+        _exerciseService = exerciseService;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var exercisesResult = await _exerciseService.GetAllExercisesAsync();
+        var exercises = exercisesResult.IsSuccess ? exercisesResult.Value : new List<ExerciseResponse>();
+        
+        ViewBag.Exercises = exercises.Take(6).ToList();
+        return View();
+    }
 
     public IActionResult About() => View();
 

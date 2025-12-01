@@ -60,10 +60,14 @@ public class DashboardService : IDashboardService
     {
         try
         {
+            var fourWeeksAgo = DateTime.Today.AddDays(-28);
+
             var details = await _context.WorkoutSessionDetails
                 .Include(d => d.Exercise)
                 .Include(d => d.WorkoutSession)
-                .Where(d => d.WorkoutSession.UserId == userId)
+                .Where(d =>
+                    d.WorkoutSession.UserId == userId &&
+                    d.WorkoutSession.StartDate >= fourWeeksAgo)
                 .ToListAsync();
 
             var stats = details

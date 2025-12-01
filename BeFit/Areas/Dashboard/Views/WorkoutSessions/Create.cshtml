@@ -5,32 +5,68 @@
 }
 
 <div class="container py-4">
-    <div class="d-flex align-items-center mb-4">
-        <i class="bi bi-calendar-check text-purple me-2" style="font-size: 1.5rem;"></i>
-        <h2 class="mb-0">Create Workout Session</h2>
-    </div>
+    <div class="row justify-content-center">
+        <div class="card p-0 border-0 shadow-sm">
+            <div class="card-header bg-purple text-white">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-calendar-plus me-2" style="font-size: 1.5rem;"></i>
+                    <h4 class="mb-0">Create Workout Session</h4>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Create" method="post" class="needs-validation" novalidate>
+                    @Html.AntiForgeryToken()
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <form asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Create" method="post">
-                <div class="mb-3">
-                    <label asp-for="StartDate" class="form-label">@Html.DisplayNameFor(m => m.StartDate)</label>
-                    <input asp-for="StartDate" class="form-control" type="datetime-local" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="EndDate" class="form-label">@Html.DisplayNameFor(m => m.EndDate)</label>
-                    <input asp-for="EndDate" class="form-control" type="datetime-local" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Notes" class="form-label">@Html.DisplayNameFor(m => m.Notes)</label>
-                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Notes" class="text-danger"></span>
-                </div>
-                <button type="submit" class="btn btn-purple">Create</button>
-                <a asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
-            </form>
+                    <div class="alert alert-info d-flex align-items-start mb-4">
+                        <i class="bi bi-info-circle me-2 mt-1"></i>
+                        <div>
+                            <p class="mb-1 fw-semibold">Session time rules</p>
+                            <ul class="mb-0 ps-3">
+                                <li>End date and time cannot be before the start date and time.</li>
+                                <li>End date and time must be no more than one day after the start date and time.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="StartDate" class="form-label fw-semibold">
+                                <i class="bi bi-clock-history text-purple me-1"></i>@Html.DisplayNameFor(m => m.StartDate)
+                            </label>
+                            <input asp-for="StartDate" class="form-control" type="datetime-local" required />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EndDate" class="form-label fw-semibold">
+                                <i class="bi bi-clock text-purple me-1"></i>@Html.DisplayNameFor(m => m.EndDate)
+                            </label>
+                            <input asp-for="EndDate" class="form-control" type="datetime-local" required />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                            <div class="form-text">
+                                End date should be on the same day as the start or at most one day later.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Notes" class="form-label fw-semibold">
+                            <i class="bi bi-journal-text text-purple me-1"></i>@Html.DisplayNameFor(m => m.Notes)
+                            <span class="text-muted">(Optional)</span>
+                        </label>
+                        <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Add any notes about this workout (e.g., goals, mood, energy level)"></textarea>
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-purple">
+                            <i class="bi bi-check-circle me-1"></i>Create Session
+                        </button>
+                        <a asp-area="Dashboard" asp-controller="WorkoutSessions" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

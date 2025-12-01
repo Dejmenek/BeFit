@@ -40,12 +40,12 @@ public class WorkoutSessionService : IWorkoutSessionService
         }
     }
 
-    public async Task<Result> DeleteWorkoutSessionAsync(int sessionId)
+    public async Task<Result> DeleteWorkoutSessionAsync(string userId, int sessionId)
     {
         try
         {
             var session = await _context.WorkoutSessions
-                .FirstOrDefaultAsync(ws => ws.Id == sessionId);
+                .FirstOrDefaultAsync(ws => ws.Id == sessionId && ws.UserId == userId);
 
             if (session == null)
                 return Result.Failure(Error.NotFound("WorkoutSessionNotFound", "Workout session not found"));
@@ -93,12 +93,12 @@ public class WorkoutSessionService : IWorkoutSessionService
         }
     }
 
-    public async Task<Result> UpdateWorkoutSessionAsync(int sessionId, WorkoutSessionRequest request)
+    public async Task<Result> UpdateWorkoutSessionAsync(string userId, int sessionId, WorkoutSessionRequest request)
     {
         try
         {
             var session = await _context.WorkoutSessions
-                .FirstOrDefaultAsync(ws => ws.Id == sessionId);
+                .FirstOrDefaultAsync(ws => ws.Id == sessionId && ws.UserId == userId);
 
             if (session == null)
                 return Result.Failure(Error.NotFound("WorkoutSessionNotFound", "Workout session not found"));
@@ -117,13 +117,13 @@ public class WorkoutSessionService : IWorkoutSessionService
         }
     }
 
-    public async Task<Result<WorkoutSessionResponse>> GetWorkoutSessionByIdAsync(int sessionId)
+    public async Task<Result<WorkoutSessionResponse>> GetWorkoutSessionByIdAsync(string userId, int sessionId)
     {
         try
         {
             var session = await _context.WorkoutSessions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(ws => ws.Id == sessionId);
+                .FirstOrDefaultAsync(ws => ws.Id == sessionId && ws.UserId == userId);
 
             if (session == null)
                 return Result.Failure<WorkoutSessionResponse>(Error.NotFound("WorkoutSessionNotFound", "Workout session not found"));

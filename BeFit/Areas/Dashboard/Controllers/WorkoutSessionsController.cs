@@ -55,13 +55,14 @@ public class WorkoutSessionsController : BaseController
 
     public async Task<IActionResult> Details(int id)
     {
-        var sessionResult = await _workoutSessionService.GetWorkoutSessionByIdAsync(id);
+        var userId = GetUserId();
+        var sessionResult = await _workoutSessionService.GetWorkoutSessionByIdAsync(userId!, id);
         if (!sessionResult.IsSuccess)
-            return View("Error", sessionResult.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var detailsResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsAsync(id);
         if (!detailsResult.IsSuccess)
-            return View("Error", detailsResult.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var viewModel = new WorkoutSessionDetailsViewModel
         {
@@ -74,7 +75,8 @@ public class WorkoutSessionsController : BaseController
 
     public async Task<IActionResult> Edit(int id)
     {
-        var result = await _workoutSessionService.GetWorkoutSessionByIdAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutSessionService.GetWorkoutSessionByIdAsync(userId!, id);
         if (!result.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 
@@ -97,7 +99,8 @@ public class WorkoutSessionsController : BaseController
             return View(response);
         }
 
-        var result = await _workoutSessionService.UpdateWorkoutSessionAsync(id, request);
+        var userId = GetUserId();
+        var result = await _workoutSessionService.UpdateWorkoutSessionAsync(userId!, id, request);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -112,7 +115,8 @@ public class WorkoutSessionsController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var result = await _workoutSessionService.DeleteWorkoutSessionAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutSessionService.DeleteWorkoutSessionAsync(userId!, id);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;

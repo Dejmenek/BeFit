@@ -54,7 +54,8 @@ public class WorkoutTemplatesController : BaseController
 
     public async Task<IActionResult> Details(int id)
     {
-        var templateResult = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(id);
+        var userId = GetUserId();
+        var templateResult = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(userId, id);
         if (!templateResult.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 
@@ -73,7 +74,8 @@ public class WorkoutTemplatesController : BaseController
 
     public async Task<IActionResult> Edit(int id)
     {
-        var result = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(userId, id);
         if (!result.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 
@@ -99,7 +101,8 @@ public class WorkoutTemplatesController : BaseController
             return View(request);
         }
 
-        var result = await _workoutTemplateService.UpdateWorkoutTemplateAsync(id, request);
+        var userId = GetUserId();
+        var result = await _workoutTemplateService.UpdateWorkoutTemplateAsync(userId, id, request);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -114,7 +117,8 @@ public class WorkoutTemplatesController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var result = await _workoutTemplateService.DeleteWorkoutTemplateAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutTemplateService.DeleteWorkoutTemplateAsync(userId, id);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;

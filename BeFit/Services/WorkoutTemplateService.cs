@@ -74,13 +74,13 @@ public class WorkoutTemplateService : IWorkoutTemplateService
         }
     }
 
-    public async Task<Result<WorkoutTemplateResponse>> GetWorkoutTemplateByIdAsync(int id)
+    public async Task<Result<WorkoutTemplateResponse>> GetWorkoutTemplateByIdAsync(string userId, int id)
     {
         try
         {
             var workoutTemplate = await _context.WorkoutTemplates
                 .AsNoTracking()
-                .FirstOrDefaultAsync(wt => wt.Id == id);
+                .FirstOrDefaultAsync(wt => wt.Id == id && wt.UserId == userId);
 
             if (workoutTemplate == null)
                 return Result.Failure<WorkoutTemplateResponse>(Error.NotFound("WorkoutTemplateNotFound", "Workout template not found"));
@@ -102,12 +102,12 @@ public class WorkoutTemplateService : IWorkoutTemplateService
         }
     }
 
-    public async Task<Result> UpdateWorkoutTemplateAsync(int id, WorkoutTemplateRequest request)
+    public async Task<Result> UpdateWorkoutTemplateAsync(string userId, int id, WorkoutTemplateRequest request)
     {
         try
         {
             var workoutTemplate = await _context.WorkoutTemplates
-                .FirstOrDefaultAsync(wt => wt.Id == id);
+                .FirstOrDefaultAsync(wt => wt.Id == id && wt.UserId == userId);
 
             if (workoutTemplate == null)
                 return Result.Failure(Error.NotFound("WorkoutTemplateNotFound", "Workout template not found"));
@@ -127,12 +127,12 @@ public class WorkoutTemplateService : IWorkoutTemplateService
         }
     }
 
-    public async Task<Result> DeleteWorkoutTemplateAsync(int id)
+    public async Task<Result> DeleteWorkoutTemplateAsync(string userId, int id)
     {
         try
         {
             var workoutTemplate = await _context.WorkoutTemplates
-                .FirstOrDefaultAsync(wt => wt.Id == id);
+                .FirstOrDefaultAsync(wt => wt.Id == id && wt.UserId == userId);
 
             if (workoutTemplate == null)
                 return Result.Failure(Error.NotFound("WorkoutTemplateNotFound", "Workout template not found"));

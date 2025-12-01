@@ -27,7 +27,7 @@ public class DashboardController : BaseController
 
         if (!exerciseStatsResult.IsSuccess || !trainingCalendarResult.IsSuccess || !workoutStatsResult.IsSuccess)
         {
-            return View("Error");
+            return RedirectToAction("Error", "Home", new { area = "" });
         }
 
         var vm = new DashboardViewModel

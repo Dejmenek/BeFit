@@ -20,7 +20,7 @@ public class ExercisesController : BaseController
     {
         var result = await _exerciseService.GetExercisesAsync(pageNumber, 10);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         return View(result.Value);
     }

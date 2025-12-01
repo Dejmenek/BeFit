@@ -23,7 +23,7 @@ public class WorkoutSessionsController : BaseController
         var userId = GetUserId();
         var result = await _workoutSessionService.GetUserWorkoutSessionsAsync(userId!, pageNumber, 5);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         return View(result.Value);
     }
@@ -76,7 +76,7 @@ public class WorkoutSessionsController : BaseController
     {
         var result = await _workoutSessionService.GetWorkoutSessionByIdAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         return View(result.Value);
     }

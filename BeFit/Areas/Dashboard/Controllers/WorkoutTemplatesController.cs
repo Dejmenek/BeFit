@@ -23,7 +23,7 @@ public class WorkoutTemplatesController : BaseController
         var userId = GetUserId();
         var result = await _workoutTemplateService.GetUserWorkoutTemplatesAsync(userId!, pageNumber, 10);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         return View(result.Value);
     }
@@ -56,11 +56,11 @@ public class WorkoutTemplatesController : BaseController
     {
         var templateResult = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(id);
         if (!templateResult.IsSuccess)
-            return View("Error", templateResult.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var exercisesResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExercisesWithNamesAsync(id);
         if (!exercisesResult.IsSuccess)
-            return View("Error", exercisesResult.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var viewModel = new WorkoutTemplateDetailsViewModel
         {
@@ -75,7 +75,7 @@ public class WorkoutTemplatesController : BaseController
     {
         var result = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var request = new WorkoutTemplateRequest
         {

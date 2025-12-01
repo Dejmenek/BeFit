@@ -17,12 +17,12 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         _context = context;
     }
 
-    public async Task<Result<List<WorkoutTemplateExerciseResponse>>> GetWorkoutTemplateExercisesAsync(int workoutTemplateId)
+    public async Task<Result<List<WorkoutTemplateExerciseResponse>>> GetWorkoutTemplateExercisesAsync(string userId, int workoutTemplateId)
     {
         try
         {
             var exercises = await _context.WorkoutTemplateExercises
-                .Where(wte => wte.WorkoutTemplateId == workoutTemplateId)
+                .Where(wte => wte.WorkoutTemplateId == workoutTemplateId && wte.WorkoutTemplate.UserId == userId)
                 .AsNoTracking()
                 .OrderBy(wte => wte.Order)
                 .Select(wte => new WorkoutTemplateExerciseResponse(
@@ -48,12 +48,12 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         }
     }
 
-    public async Task<Result<List<WorkoutTemplateExerciseWithExerciseNameResponse>>> GetWorkoutTemplateExercisesWithNamesAsync(int workoutTemplateId)
+    public async Task<Result<List<WorkoutTemplateExerciseWithExerciseNameResponse>>> GetWorkoutTemplateExercisesWithNamesAsync(string userId, int workoutTemplateId)
     {
         try
         {
             var exercises = await _context.WorkoutTemplateExercises
-                .Where(wte => wte.WorkoutTemplateId == workoutTemplateId)
+                .Where(wte => wte.WorkoutTemplateId == workoutTemplateId && wte.WorkoutTemplate.UserId == userId)
                 .AsNoTracking()
                 .OrderBy(wte => wte.Order)
                 .Select(wte => new WorkoutTemplateExerciseWithExerciseNameResponse(
@@ -80,13 +80,13 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         }
     }
 
-    public async Task<Result<WorkoutTemplateExerciseWithExerciseNameResponse>> GetWorkoutTemplateExerciseByIdAsync(int workoutTemplateExerciseId)
+    public async Task<Result<WorkoutTemplateExerciseWithExerciseNameResponse>> GetWorkoutTemplateExerciseByIdAsync(string userId, int workoutTemplateExerciseId)
     {
         try
         {
             var exercise = await _context.WorkoutTemplateExercises
                 .AsNoTracking()
-                .Where(wte => wte.Id == workoutTemplateExerciseId)
+                .Where(wte => wte.Id == workoutTemplateExerciseId && wte.WorkoutTemplate.UserId == userId)
                 .Select(wte => new WorkoutTemplateExerciseWithExerciseNameResponse(
                     wte.Id,
                     wte.WorkoutTemplateId,
@@ -114,12 +114,13 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         }
     }
 
-    public async Task<Result> AddWorkoutTemplateExerciseAsync(int workoutTemplateId, WorkoutTemplateExerciseRequest request)
+    public async Task<Result> AddWorkoutTemplateExerciseAsync(string userId, int workoutTemplateId, WorkoutTemplateExerciseRequest request)
     {
         try
         {
-            var templateExists = await _context.WorkoutTemplates.AnyAsync(wt => wt.Id == workoutTemplateId);
-            if (!templateExists)
+            var templateExistsForUser = await _context.WorkoutTemplates
+                .AnyAsync(wt => wt.Id == workoutTemplateId && wt.UserId == userId);
+            if (!templateExistsForUser)
                 return Result.Failure(Error.NotFound("WorkoutTemplateNotFound", "Workout template not found"));
 
             var exerciseExists = await _context.Exercises.AnyAsync(e => e.Id == request.ExerciseId);
@@ -156,11 +157,13 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         }
     }
 
-    public async Task<Result> UpdateWorkoutTemplateExerciseAsync(int workoutTemplateExerciseId, WorkoutTemplateExerciseRequest request)
+    public async Task<Result> UpdateWorkoutTemplateExerciseAsync(string userId, int workoutTemplateExerciseId, WorkoutTemplateExerciseRequest request)
     {
         try
         {
-            var exercise = await _context.WorkoutTemplateExercises.FindAsync(workoutTemplateExerciseId);
+            var exercise = await _context.WorkoutTemplateExercises
+                .Include(wte => wte.WorkoutTemplate)
+                .FirstOrDefaultAsync(wte => wte.Id == workoutTemplateExerciseId && wte.WorkoutTemplate.UserId == userId);
             if (exercise == null)
                 return Result.Failure(Error.NotFound("WorkoutTemplateExerciseNotFound", "Workout template exercise not found"));
 
@@ -195,11 +198,13 @@ public class WorkoutTemplateExerciseService : IWorkoutTemplateExerciseService
         }
     }
 
-    public async Task<Result> RemoveWorkoutTemplateExerciseAsync(int workoutTemplateExerciseId)
+    public async Task<Result> RemoveWorkoutTemplateExerciseAsync(string userId, int workoutTemplateExerciseId)
     {
         try
         {
-            var exercise = await _context.WorkoutTemplateExercises.FindAsync(workoutTemplateExerciseId);
+            var exercise = await _context.WorkoutTemplateExercises
+                .Include(wte => wte.WorkoutTemplate)
+                .FirstOrDefaultAsync(wte => wte.Id == workoutTemplateExerciseId && wte.WorkoutTemplate.UserId == userId);
             if (exercise == null)
                 return Result.Failure(Error.NotFound("WorkoutTemplateExerciseNotFound", "Workout template exercise not found"));
 

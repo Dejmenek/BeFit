@@ -20,6 +20,8 @@ public class WorkoutTemplateExercisesController : BaseController
 
     public async Task<IActionResult> Create(int workoutTemplateId)
     {
+        var userId = GetUserId();
+
         var exercisesResult = await _exerciseService.GetAllExercisesAsync();
         if (!exercisesResult.IsSuccess)
         {
@@ -59,8 +61,9 @@ public class WorkoutTemplateExercisesController : BaseController
             return View(viewModel);
         }
 
+        var userId = GetUserId();
         var requestWithTemplateId = request with { WorkoutTemplateId = workoutTemplateId };
-        var result = await _workoutTemplateExerciseService.AddWorkoutTemplateExerciseAsync(workoutTemplateId, requestWithTemplateId);
+        var result = await _workoutTemplateExerciseService.AddWorkoutTemplateExerciseAsync(userId!, workoutTemplateId, requestWithTemplateId);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -73,7 +76,8 @@ public class WorkoutTemplateExercisesController : BaseController
 
     public async Task<IActionResult> Edit(int id, int workoutTemplateId)
     {
-        var exerciseResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExerciseByIdAsync(id);
+        var userId = GetUserId();
+        var exerciseResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExerciseByIdAsync(userId!, id);
         if (!exerciseResult.IsSuccess)
         {
             TempData["Error"] = exerciseResult.Error.Description;
@@ -136,8 +140,9 @@ public class WorkoutTemplateExercisesController : BaseController
             return View(viewModel);
         }
 
+        var userId = GetUserId();
         var requestWithTemplateId = request with { WorkoutTemplateId = workoutTemplateId };
-        var result = await _workoutTemplateExerciseService.UpdateWorkoutTemplateExerciseAsync(id, requestWithTemplateId);
+        var result = await _workoutTemplateExerciseService.UpdateWorkoutTemplateExerciseAsync(userId!, id, requestWithTemplateId);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -150,7 +155,8 @@ public class WorkoutTemplateExercisesController : BaseController
 
     public async Task<IActionResult> Details(int id, int workoutTemplateId)
     {
-        var exerciseResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExerciseByIdAsync(id);
+        var userId = GetUserId();
+        var exerciseResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExerciseByIdAsync(userId!, id);
         if (!exerciseResult.IsSuccess)
         {
             TempData["Error"] = exerciseResult.Error.Description;
@@ -170,7 +176,8 @@ public class WorkoutTemplateExercisesController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id, int workoutTemplateId)
     {
-        var result = await _workoutTemplateExerciseService.RemoveWorkoutTemplateExerciseAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutTemplateExerciseService.RemoveWorkoutTemplateExerciseAsync(userId!, id);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;

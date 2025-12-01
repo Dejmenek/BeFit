@@ -55,11 +55,11 @@ public class WorkoutTemplatesController : BaseController
     public async Task<IActionResult> Details(int id)
     {
         var userId = GetUserId();
-        var templateResult = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(userId, id);
+        var templateResult = await _workoutTemplateService.GetWorkoutTemplateByIdAsync(userId!, id);
         if (!templateResult.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 
-        var exercisesResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExercisesWithNamesAsync(id);
+        var exercisesResult = await _workoutTemplateExerciseService.GetWorkoutTemplateExercisesWithNamesAsync(userId!, id);
         if (!exercisesResult.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 

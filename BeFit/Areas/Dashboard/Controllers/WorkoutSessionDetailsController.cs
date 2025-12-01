@@ -20,6 +20,8 @@ public class WorkoutSessionDetailsController : BaseController
 
     public async Task<IActionResult> Create(int workoutSessionId)
     {
+        var userId = GetUserId();
+
         var exercisesResult = await _exerciseService.GetAllExercisesAsync();
         if (!exercisesResult.IsSuccess)
         {
@@ -59,7 +61,8 @@ public class WorkoutSessionDetailsController : BaseController
             return View(viewModel);
         }
 
-        var result = await _workoutSessionDetailsService.AddWorkoutSessionDetailAsync(workoutSessionId, request);
+        var userId = GetUserId();
+        var result = await _workoutSessionDetailsService.AddWorkoutSessionDetailAsync(userId!, workoutSessionId, request);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -72,7 +75,8 @@ public class WorkoutSessionDetailsController : BaseController
 
     public async Task<IActionResult> Edit(int id, int workoutSessionId)
     {
-        var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(id);
+        var userId = GetUserId();
+        var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(userId!, id);
         if (!detailResult.IsSuccess)
         {
             TempData["Error"] = detailResult.Error.Description;
@@ -133,7 +137,8 @@ public class WorkoutSessionDetailsController : BaseController
             return View(viewModel);
         }
 
-        var result = await _workoutSessionDetailsService.UpdateWorkoutSessionDetailAsync(id, request);
+        var userId = GetUserId();
+        var result = await _workoutSessionDetailsService.UpdateWorkoutSessionDetailAsync(userId!, id, request);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;
@@ -146,7 +151,8 @@ public class WorkoutSessionDetailsController : BaseController
 
     public async Task<IActionResult> Details(int id, int workoutSessionId)
     {
-        var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(id);
+        var userId = GetUserId();
+        var detailResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsByIdAsync(userId!, id);
         if (!detailResult.IsSuccess)
         {
             TempData["Error"] = detailResult.Error.Description;
@@ -166,7 +172,8 @@ public class WorkoutSessionDetailsController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id, int workoutSessionId)
     {
-        var result = await _workoutSessionDetailsService.RemoveWorkoutSessionDetailAsync(id);
+        var userId = GetUserId();
+        var result = await _workoutSessionDetailsService.RemoveWorkoutSessionDetailAsync(userId!, id);
         if (!result.IsSuccess)
         {
             TempData["Error"] = result.Error.Description;

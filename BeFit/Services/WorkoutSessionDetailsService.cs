@@ -17,12 +17,13 @@ public class WorkoutSessionDetailsService : IWorkoutSessionDetailsService
         _context = context;
     }
 
-    public async Task<Result> AddWorkoutSessionDetailAsync(int workoutSessionId, WorkoutSessionDetailRequest workoutSessionDetailRequest)
+    public async Task<Result> AddWorkoutSessionDetailAsync(string userId, int workoutSessionId, WorkoutSessionDetailRequest workoutSessionDetailRequest)
     {
         try
         {
-            var sessionExists = await _context.WorkoutSessions.AnyAsync(ws => ws.Id == workoutSessionId);
-            if (!sessionExists)
+            var sessionExistsForUser = await _context.WorkoutSessions
+                .AnyAsync(ws => ws.Id == workoutSessionId && ws.UserId == userId);
+            if (!sessionExistsForUser)
                 return Result.Failure(Error.NotFound("WorkoutSessionNotFound", "Workout session not found"));
 
             var exerciseExists = await _context.Exercises.AnyAsync(e => e.Id == workoutSessionDetailRequest.ExerciseId);
@@ -53,13 +54,13 @@ public class WorkoutSessionDetailsService : IWorkoutSessionDetailsService
         }
     }
 
-    public async Task<Result<PaginatedList<WorkoutSessionDetailResponse>>> GetWorkoutSessionDetailsAsync(int workoutSessionId)
+    public async Task<Result<PaginatedList<WorkoutSessionDetailResponse>>> GetWorkoutSessionDetailsAsync(string userId, int workoutSessionId)
     {
         try
         {
             var query = _context.WorkoutSessionDetails
                 .AsNoTracking()
-                .Where(d => d.WorkoutSessionId == workoutSessionId);
+                .Where(d => d.WorkoutSessionId == workoutSessionId && d.WorkoutSession.UserId == userId);
 
             var totalItems = await query.CountAsync();
             var items = await query
@@ -90,13 +91,13 @@ public class WorkoutSessionDetailsService : IWorkoutSessionDetailsService
         }
     }
 
-    public async Task<Result<WorkoutSessionDetailResponse>> GetWorkoutSessionDetailsByIdAsync(int workoutSessionDetailId)
+    public async Task<Result<WorkoutSessionDetailResponse>> GetWorkoutSessionDetailsByIdAsync(string userId, int workoutSessionDetailId)
     {
         try
         {
             var detail = await _context.WorkoutSessionDetails
                 .AsNoTracking()
-                .Where(d => d.Id == workoutSessionDetailId)
+                .Where(d => d.Id == workoutSessionDetailId && d.WorkoutSession.UserId == userId)
                 .Select(d => new WorkoutSessionDetailResponse
                 {
                     Id = d.Id,
@@ -124,11 +125,13 @@ public class WorkoutSessionDetailsService : IWorkoutSessionDetailsService
         }
     }
 
-    public async Task<Result> RemoveWorkoutSessionDetailAsync(int workoutSessionDetailId)
+    public async Task<Result> RemoveWorkoutSessionDetailAsync(string userId, int workoutSessionDetailId)
     {
         try
         {
-            var detail = await _context.WorkoutSessionDetails.FindAsync(workoutSessionDetailId);
+            var detail = await _context.WorkoutSessionDetails
+                .Include(d => d.WorkoutSession)
+                .FirstOrDefaultAsync(d => d.Id == workoutSessionDetailId && d.WorkoutSession.UserId == userId);
             if (detail == null)
                 return Result.Failure(Error.NotFound("WorkoutSessionDetailNotFound", "Workout session detail not found"));
 
@@ -143,11 +146,13 @@ public class WorkoutSessionDetailsService : IWorkoutSessionDetailsService
         }
     }
 
-    public async Task<Result> UpdateWorkoutSessionDetailAsync(int workoutSessionDetailId, WorkoutSessionDetailRequest workoutSessionDetailRequest)
+    public async Task<Result> UpdateWorkoutSessionDetailAsync(string userId, int workoutSessionDetailId, WorkoutSessionDetailRequest workoutSessionDetailRequest)
     {
         try
         {
-            var detail = await _context.WorkoutSessionDetails.FindAsync(workoutSessionDetailId);
+            var detail = await _context.WorkoutSessionDetails
+                .Include(d => d.WorkoutSession)
+                .FirstOrDefaultAsync(d => d.Id == workoutSessionDetailId && d.WorkoutSession.UserId == userId);
             if (detail == null)
                 return Result.Failure(Error.NotFound("WorkoutSessionDetailNotFound", "Workout session detail not found"));
 

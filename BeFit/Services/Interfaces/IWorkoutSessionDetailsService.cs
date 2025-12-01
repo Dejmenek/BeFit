@@ -5,9 +5,9 @@ namespace BeFit.Services.Interfaces;
 
 public interface IWorkoutSessionDetailsService
 {
-    Task<Result<PaginatedList<WorkoutSessionDetailResponse>>> GetWorkoutSessionDetailsAsync(int workoutSessionId);
-    Task<Result<WorkoutSessionDetailResponse>> GetWorkoutSessionDetailsByIdAsync(int workoutSessionDetailId);
-    Task<Result> AddWorkoutSessionDetailAsync(int workoutSessionId, WorkoutSessionDetailRequest workoutSessionDetailRequest);
-    Task<Result> RemoveWorkoutSessionDetailAsync(int workoutSessionDetailId);
-    Task<Result> UpdateWorkoutSessionDetailAsync(int workoutSessionDetailId, WorkoutSessionDetailRequest workoutSessionDetailRequest);
+    Task<Result<PaginatedList<WorkoutSessionDetailResponse>>> GetWorkoutSessionDetailsAsync(string userId, int workoutSessionId);
+    Task<Result<WorkoutSessionDetailResponse>> GetWorkoutSessionDetailsByIdAsync(string userId, int workoutSessionDetailId);
+    Task<Result> AddWorkoutSessionDetailAsync(string userId, int workoutSessionId, WorkoutSessionDetailRequest workoutSessionDetailRequest);
+    Task<Result> RemoveWorkoutSessionDetailAsync(string userId, int workoutSessionDetailId);
+    Task<Result> UpdateWorkoutSessionDetailAsync(string userId, int workoutSessionDetailId, WorkoutSessionDetailRequest workoutSessionDetailRequest);
 }

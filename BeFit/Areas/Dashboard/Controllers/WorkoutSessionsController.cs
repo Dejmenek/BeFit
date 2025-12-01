@@ -60,7 +60,7 @@ public class WorkoutSessionsController : BaseController
         if (!sessionResult.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 
-        var detailsResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsAsync(id);
+        var detailsResult = await _workoutSessionDetailsService.GetWorkoutSessionDetailsAsync(userId!, id);
         if (!detailsResult.IsSuccess)
             return RedirectToAction("Error", "Home", new { area = "" });
 

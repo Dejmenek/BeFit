@@ -1,4 +1,4 @@
-namespace BeFit.Models
+namespace BeFit.Models.ViewModels
 {
     public class ErrorViewModel
     {

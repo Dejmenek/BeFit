@@ -1,4 +1,6 @@
-namespace BeFit.DTOs;
+using BeFit.DTOs;
+
+namespace BeFit.Models.ViewModels;
 
 public class WorkoutTemplateExerciseCreateViewModel
 {
@@ -6,4 +8,3 @@ public class WorkoutTemplateExerciseCreateViewModel
     public List<ExerciseResponse> Exercises { get; set; } = new();
     public int WorkoutTemplateId { get; set; }
 }
-

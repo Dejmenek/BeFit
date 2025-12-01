@@ -1,4 +1,4 @@
-using BeFit.Models;
+using BeFit.Models.ViewModels;
 using BeFit.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

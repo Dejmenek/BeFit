@@ -11,6 +11,7 @@
 3. [Features](#features)
 4. [Installation and Setup](#installation-and-setup)
 5. [Examples](#examples)
+6. [Authors](#authors)
 
 ### General Information
 
@@ -161,3 +162,6 @@ dotnet run
 
 #### Workout Session
 <img width="1868" height="892" alt="image" src="https://github.com/user-attachments/assets/eca32261-5736-4f4e-a330-783a068e01ab" />
+
+### Authors
+- Damian Sempski 149720

@@ -75,6 +75,36 @@ public class ExerciseService : IExerciseService
         }
     }
 
+    public async Task<Result<ExerciseResponse>> GetExerciseByIdAsync(int exerciseId)
+    {
+        try
+        {
+            var exercise = await _context.Exercises
+                .AsNoTracking()
+                .Where(e => e.Id == exerciseId)
+                .Select(e => new ExerciseResponse
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Category = e.Category,
+                    TargetMuscle = e.TargetMuscle,
+                    Difficulty = e.Difficulty,
+                    Instructions = e.Instructions,
+                    Equipment = e.Equipment
+                })
+                .FirstOrDefaultAsync();
+
+            if (exercise == null)
+                return Result.Failure<ExerciseResponse>(Error.NotFound("ExerciseNotFound", "Exercise not found"));
+
+            return Result.Success(exercise);
+        }
+        catch (Exception)
+        {
+            return Result.Failure<ExerciseResponse>(Error.General);
+        }
+    }
+
     public async Task<Result<List<ExerciseResponse>>> GetAllExercisesAsync()
     {
         try

@@ -53,22 +53,18 @@ public class ExercisesController : BaseController
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int id)
     {
-        var result = await _exerciseService.GetExercisesAsync(1, int.MaxValue);
+        var result = await _exerciseService.GetExerciseByIdAsync(id);
         if (!result.IsSuccess)
-            return View("Error", result.Error);
-
-        var exercise = result.Value.Items.FirstOrDefault(e => e.Id == id);
-        if (exercise == null)
-            return NotFound();
+            return RedirectToAction("Error", "Home", new { area = "" });
 
         var request = new ExerciseRequest
         {
-            Name = exercise.Name,
-            Category = exercise.Category,
-            TargetMuscle = exercise.TargetMuscle,
-            Difficulty = exercise.Difficulty,
-            Instructions = exercise.Instructions,
-            Equipment = exercise.Equipment
+            Name = result.Value.Name,
+            Category = result.Value.Category,
+            TargetMuscle = result.Value.TargetMuscle,
+            Difficulty = result.Value.Difficulty,
+            Instructions = result.Value.Instructions,
+            Equipment = result.Value.Equipment
         };
 
         return View(request);
